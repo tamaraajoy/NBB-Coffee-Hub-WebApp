@@ -1,0 +1,20 @@
+pip install fastapi uvicorn = mendownload framework python 
+untuk membuat API dan backend web , uvicorn adalah server 
+ringan buat jalanin aplikasi fastAPI.
+
+fastapi untuk menulis kode backend
+uvicorn untuk jalanin server biar bisa diakses lewat browser
+
+'''
+from fastapi import FastAPI 
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "NBB Coffee Hub Backend is running"}
+'''
+
+from fastapi import FastAPI -> impor kelas FastAPI
+app = FastAPI() -> membuat instance bernama app
+@app.get("/") = dibawah ini yang akan dijalankan oleh user

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test FastAPI Connection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="p-6 bg-white rounded-xl shadow-lg w-96 text-center">
+    <h1 class="text-xl font-bold mb-4">Frontend Test</h1>
+
+    <button id="checkBtn"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      Cek Backend
+    </button>
+
+    <p id="output" class="mt-4 text-gray-700"></p>
+  </div>
+
+  <script>
+    const BASE_URL = "http://127.0.0.1:8000";
+
+    async function getStatus() {
+      try {
+        const res = await fetch(BASE_URL + "/");
+        const data = await res.json();
+        document.getElementById("output").innerText = data.message;
+      } catch (err) {
+        document.getElementById("output").innerText = "Error: " + err;
+      }
+    }
+
+    document.getElementById("checkBtn").addEventListener("click", getStatus);
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - NBB Coffee Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-title { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="font-body bg-cover bg-center" style="background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('landing_page.jpg');">
+
+    <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50 bg-cover bg-center">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+            <h1 class="text-2xl font-title text-[#B8860B]">NBB Coffee Hub</h1>
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="landing_page.html" class="hover:text-[#B8860B] transition">Beranda</a>
+                <a href="#" class="hover:text-[#B8860B] transition">Fitur</a>
+                <a href="#" class="hover:text-[#B8860B] transition">Harga</a>
+                <a href="#" class="hover:text-[#B8860B] transition">Kontak</a>
+            </nav>
+            <div class="space-x-4">
+                <a href="login.html" class="text-sm font-semibold hover:text-[#B8860B] transition">Masuk</a>
+                <a href="register.html" class="bg-[#B8860B] text-[#EFEBE9] px-4 py-2 rounded-lg shadow-md hover:bg-[#654321] transition">
+                    Daftar
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="min-h-screen flex items-center justify-center pt-24 pb-16">
+        <div class="bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-xl max-w-sm w-full space-y-6">
+            <a href="landing_page.html" class="text-sm text-[#654321] hover:underline flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                Kembali
+            </a>
+
+            <h2 class="text-3xl font-title text-center text-[#4B3832]">Masuk ke Akun Anda</h2>
+            
+            <form class="space-y-4" action="dashboard.html">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-[#4B3832]">Username</label>
+                    <input type="text" id="username" name="username" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#B8860B] focus:border-[#B8860B] sm:text-sm bg-white/70">
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-[#4B3832]">Password</label>
+                    <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#B8860B] focus:border-[#B8860B] sm:text-sm bg-white/70">
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <a href="#" class="text-xs text-[#654321] hover:underline">Lupa Kata Sandi?</a>
+                    <button type="submit" class="bg-[#B8860B] text-[#EFEBE9] px-6 py-2 rounded-md shadow-md hover:bg-[#654321] transition">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+            
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="bg-white/80 px-2 text-gray-500">Atau</span>
+                </div>
+            </div>
+
+            <button class="w-full flex justify-center items-center gap-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B8860B] transition">
+                <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google Logo" class="h-5 w-5">
+                Masuk dengan Google
+            </button>
+
+            <p class="text-sm text-center text-[#4B3832]">
+                Belum punya akun?
+                <a href="register.html" class="text-[#B8860B] font-medium hover:underline">Buat Akun</a>
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>

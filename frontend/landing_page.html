@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBB Coffee Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-title { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="font-body bg-cover bg-center" style="background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url('landing_page.jpg');">
+
+    <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50 bg-cover bg-center">
+        <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+            <h1 class="text-2xl font-title text-[#B8860B]">NBB Coffee Hub</h1>
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="#" class="hover:text-[#B8860B] transition">Beranda</a>
+                <a href="#" class="hover:text-[#B8860B] transition">Fitur</a>
+                <a href="#" class="hover:text-[#B8860B] transition">Harga</a>
+                <a href="#" class="hover:text-[#B8860B] transition">Kontak</a>
+            </nav>
+            <div class="space-x-4">
+                <a href="login.html" class="text-sm font-semibold hover:text-[#B8860B] transition">Masuk</a>
+                <a href="register.html" class="bg-[#B8860B] text-[#EFEBE9] px-4 py-2 rounded-lg shadow-md hover:bg-[#654321] transition">
+                    Daftar
+                </a>
+            </div>
+        </div>
+    </header>
+
+
+    <section class="min-h-screen flex flex-col-reverse md:flex-row items-center justify-between px-8 pt-32 pb-16 max-w-6xl mx-auto text-[#4B3832]">
+        
+        <div class="md:w-1/2 space-y-6">
+            <h2 class="text-4xl md:text-5xl font-title leading-tight text-[#4B3832]">
+                Kopi Terbaik <br> untuk Harimu ☕
+            </h2>
+            <p class="text-lg text-[#654321]">
+                Kami adalah ekosistem kopi terintegrasi yang menghubungkan petani lokal dengan pebisnis dan penikmat kopi. 
+                Bergabunglah dengan kami untuk menjelajahi peluang kemitraan dan menikmati cita rasa otentik dari seluruh Nusantara.
+            </p>
+        </div>
+
+        <div class="md:w-1/2 mb-10 md:mb-0 flex justify-center">
+            <img src="https://cdn-icons-png.flaticon.com/512/924/924514.png" 
+                alt="Coffee Illustration" class="w-72 md:w-96 drop-shadow-lg">
+        </div>
+    </section>
+
+</body>
+</html>

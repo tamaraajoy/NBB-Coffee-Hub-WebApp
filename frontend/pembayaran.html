@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembayaran - NBB Coffee Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .font-title { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="font-body bg-gray-100">
+
+  <!-- HEADER -->
+  <header class="bg-[#4B3832]/90 text-[#EFEBE9] py-4 px-8">
+    <h1 class="text-2xl font-title text-[#B8860B]">NBB Coffee Hub</h1>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-5xl mx-auto bg-white rounded-lg shadow-lg p-8 mt-10 mb-20">
+    <h2 class="text-3xl font-title text-[#4B3832] mb-8 text-center">Pembayaran Pesanan</h2>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- DETAIL PEMBELIAN -->
+      <section class="lg:col-span-2 space-y-6">
+        <!-- Alamat Pengiriman -->
+        <div class="border border-gray-200 rounded-lg p-5">
+          <h3 class="font-semibold text-lg text-[#4B3832] mb-3">Alamat Pengiriman</h3>
+          <p class="text-sm text-gray-700">Tamara Joy</p>
+          <p class="text-sm text-gray-700">Jl. Mawar No. 45, Bandung, Jawa Barat</p>
+          <p class="text-sm text-gray-700">Kode Pos: 40123 | No. Telp: +62 812 3456 7890</p>
+          <button id="ubahAlamat" class="mt-3 text-[#B8860B] hover:underline text-sm">Ubah Alamat</button>
+        </div>
+
+        <!-- Detail Item -->
+        <div class="border border-gray-200 rounded-lg p-5">
+          <h3 class="font-semibold text-lg text-[#4B3832] mb-4">Detail Item</h3>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between border-b pb-3">
+              <div class="flex items-center gap-4">
+                <img src="https://via.placeholder.com/80x80.png?text=Gayo+Arabika" class="rounded-md">
+                <div>
+                  <p class="font-medium text-[#4B3832]">Kopi Gayo Arabika</p>
+                  <p class="text-sm text-gray-500">1 kg</p>
+                </div>
+              </div>
+              <p class="font-medium text-[#654321]">Rp 120.000</p>
+            </div>
+
+            <div class="flex items-center justify-between border-b pb-3">
+              <div class="flex items-center gap-4">
+                <img src="https://via.placeholder.com/80x80.png?text=Bali+Kintamani" class="rounded-md">
+                <div>
+                  <p class="font-medium text-[#4B3832]">Kopi Bali Kintamani</p>
+                  <p class="text-sm text-gray-500">500 gr</p>
+                </div>
+              </div>
+              <p class="font-medium text-[#654321]">Rp 70.000</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metode Pengiriman -->
+        <div class="border border-gray-200 rounded-lg p-5">
+          <h3 class="font-semibold text-lg text-[#4B3832] mb-3">Metode Pengiriman</h3>
+          <select id="metodePengiriman" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-[#B8860B] focus:border-[#B8860B]">
+            <option value="">Pilih jasa pengiriman</option>
+            <option value="jne">JNE Express</option>
+            <option value="jnt">J&T Cargo</option>
+            <option value="sicepat">SiCepat Reguler</option>
+            <option value="anteraja">AnterAja</option>
+          </select>
+          <p class="text-sm text-gray-500 mt-2">*Waktu pengiriman tergantung daerah tujuan.</p>
+        </div>
+
+        <!-- Metode Pembayaran -->
+        <div class="border border-gray-200 rounded-lg p-5">
+          <h3 class="font-semibold text-lg text-[#4B3832] mb-3">Metode Pembayaran</h3>
+          <div class="space-y-3">
+            <label class="flex items-center gap-3">
+              <input type="radio" name="metodeBayar" value="transfer" class="text-[#B8860B] focus:ring-[#B8860B]">
+              <span>Transfer Bank (BCA, BNI, Mandiri)</span>
+            </label>
+            <label class="flex items-center gap-3">
+              <input type="radio" name="metodeBayar" value="qris" class="text-[#B8860B] focus:ring-[#B8860B]">
+              <span>QRIS / E-Wallet (GoPay, OVO, Dana, ShopeePay)</span>
+            </label>
+            <label class="flex items-center gap-3">
+              <input type="radio" name="metodeBayar" value="virtual" class="text-[#B8860B] focus:ring-[#B8860B]">
+              <span>Virtual Account (BCA VA, BNI VA, Mandiri VA)</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- RINGKASAN PESANAN -->
+      <aside class="bg-[#FAF8F5] border border-gray-200 rounded-lg p-6 h-fit">
+        <h3 class="font-semibold text-lg text-[#4B3832] mb-4">Ringkasan Pesanan</h3>
+
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <p>Subtotal</p>
+            <p>Rp 190.000</p>
+          </div>
+          <div class="flex justify-between">
+            <p>Biaya Pengiriman</p>
+            <p>Rp 15.000</p>
+          </div>
+          <hr class="my-2">
+          <div class="flex justify-between font-semibold text-[#4B3832] text-base">
+            <p>Total Pembayaran</p>
+            <p>Rp 205.000</p>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-3">
+          <button id="bayarBtn" class="bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#654321] transition">Bayar Sekarang</button>
+          <button id="batalBtn" class="border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition">Batal</button>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <script>
+    // Tombol aksi
+    document.getElementById("bayarBtn").addEventListener("click", () => {
+      alert("Pembayaran berhasil diproses! Terima kasih telah berbelanja di NBB Coffee Hub ☕");
+      window.location.href = "dashboard.html"; // kembali ke beranda setelah bayar
+    });
+
+    document.getElementById("batalBtn").addEventListener("click", () => {
+      window.location.href = "keranjang.html"; // kembali ke halaman keranjang
+    });
+     document.getElementById("ubahAlamat").addEventListener("click", () => {
+    window.location.href = "edit_profil.html";
+  });
+  </script>
+</body>
+</html>

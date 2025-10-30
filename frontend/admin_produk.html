@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Blog - NBB Coffee Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .font-title { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50 font-poppins">
+
+  <!-- ✅ NAVBAR -->
+  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="admin_dashboard.html" class="hover:text-[#B8860B] transition">Dashboard</a>
+        <a href="admin_produk.html" class="text-[#B8860B] font-semibold transition">Kelola Produk</a>
+        <a href="admin_blog.html" class="hover:text-[#B8860B] transition">Kelola Blog</a>
+        <a href="admin_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button id="open-profil" class="hover:text-[#B8860B] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ✅ SIDEBAR PROFIL -->
+  <div id="profilePanel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+    <div class="p-6">
+      <h2 class="text-2xl font-playfair text-[#4B3832] mb-4">Profil Admin</h2>
+      <div class="space-y-3 text-gray-700">
+        <p><strong>Nama:</strong> Admin NBB</p>
+        <p><strong>Email:</strong> admin@nbbcoffeehub.com</p>
+        <p><strong>Role:</strong> Administrator</p>
+      </div>
+      <button id="logout-btn" class="mt-6 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md w-full">Logout</button>
+    </div>
+  </div>
+
+  <!-- ✅ OVERLAY PROFIL -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+  <!-- ✅ MAIN CONTENT -->
+  <main class="container mx-auto py-10 px-6 pt-28">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-playfair text-[#4B3832]">Manajemen Produk</h2>
+      <button onclick="openModal()" class="bg-[#B8860B] text-white px-5 py-2 rounded-md shadow hover:bg-yellow-700">
+        + Tambah Produk
+      </button>
+    </div>
+
+    <!-- GRID PRODUK -->
+    <div id="produkGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <!-- ✅ MODAL TAMBAH/EDIT PRODUK -->
+  <div id="produkModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg my-10">
+      <h3 id="modalTitle" class="text-xl font-semibold mb-4">Tambah Produk</h3>
+      <form id="produkForm" class="space-y-4">
+        <input type="hidden" id="editIndex">
+        <div>
+          <label class="block text-gray-700">Nama Produk</label>
+          <input id="namaProduk" type="text" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
+        </div>
+        <div>
+          <label class="block text-gray-700">Harga (Rp)</label>
+          <input id="hargaProduk" type="number" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
+        </div>
+        <div>
+          <label class="block text-gray-700">Asal Kopi</label>
+          <input id="asalProduk" type="text" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
+        </div>
+        <div>
+          <label class="block text-gray-700">Gambar Produk</label>
+          <input id="gambarProduk" type="file" accept="image/*" class="w-full border rounded-md px-3 py-2" onchange="previewGambar(event)">
+          <img id="previewImage" class="mt-3 w-32 h-32 object-cover rounded-md hidden">
+        </div>
+        <div class="flex justify-end space-x-3">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Batal</button>
+          <button type="submit" class="px-4 py-2 bg-[#B8860B] text-white rounded-md hover:bg-yellow-700">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ FOOTER -->
+  <footer class="bg-[#4B3832] text-white py-4 mt-12">
+    <div class="text-center text-sm">&copy; 2025 NBB Coffee Hub. All rights reserved.</div>
+  </footer>
+
+  <!-- ✅ SCRIPT -->
+  <script>
+    const panel = document.getElementById('profilePanel');
+    const overlay = document.getElementById('overlay');
+    const profileBtn = document.getElementById('open-profil');
+
+    profileBtn.addEventListener('click', () => {
+      panel.classList.toggle('translate-x-full');
+      overlay.classList.toggle('hidden');
+    });
+    overlay.addEventListener('click', () => {
+      panel.classList.add('translate-x-full');
+      overlay.classList.add('hidden');
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      if (confirm("Apakah Anda yakin ingin logout?")) {
+        window.location.href = "admin_login.html";
+      }
+    });
+
+    let produkList = JSON.parse(localStorage.getItem("produkList")) || [];
+
+    function renderProduk() {
+      const grid = document.getElementById("produkGrid");
+      grid.innerHTML = "";
+      produkList.forEach((p, i) => {
+        grid.innerHTML += `
+          <div class="bg-white rounded-xl shadow-md p-4">
+            <img src="${p.gambar}" alt="${p.nama}" class="w-full h-48 object-cover rounded-lg mb-4">
+            <h3 class="font-semibold text-lg text-[#4B3832]">${p.nama}</h3>
+            <p class="text-gray-600">Rp ${p.harga.toLocaleString()}</p>
+            <p class="text-sm text-gray-500 mb-3">${p.asal}</p>
+            <div class="flex justify-between">
+              <button onclick="editProduk(${i})" class="px-3 py-1 bg-yellow-500 text-white rounded-md text-sm hover:bg-yellow-600">Edit</button>
+              <button onclick="hapusProduk(${i})" class="px-3 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600">Hapus</button>
+            </div>
+          </div>
+        `;
+      });
+      localStorage.setItem("produkList", JSON.stringify(produkList));
+    }
+
+    function openModal(editMode = false) {
+      document.getElementById("produkModal").classList.remove("hidden");
+      document.getElementById("modalTitle").textContent = editMode ? "Edit Produk" : "Tambah Produk";
+    }
+
+    function closeModal() {
+      document.getElementById("produkModal").classList.add("hidden");
+      document.getElementById("produkForm").reset();
+      document.getElementById("previewImage").classList.add("hidden");
+      document.getElementById("editIndex").value = "";
+    }
+
+    function previewGambar(e) {
+      const img = document.getElementById("previewImage");
+      img.src = URL.createObjectURL(e.target.files[0]);
+      img.classList.remove("hidden");
+    }
+
+    document.getElementById("produkForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const nama = document.getElementById("namaProduk").value;
+      const harga = parseInt(document.getElementById("hargaProduk").value);
+      const asal = document.getElementById("asalProduk").value;
+      const fileInput = document.getElementById("gambarProduk");
+      const imgURL = fileInput.files[0] ? URL.createObjectURL(fileInput.files[0]) : "https://via.placeholder.com/150";
+      const editIndex = document.getElementById("editIndex").value;
+
+      if (editIndex) {
+        produkList[editIndex] = { nama, harga, asal, gambar: imgURL };
+      } else {
+        produkList.push({ nama, harga, asal, gambar: imgURL });
+      }
+      renderProduk();
+      closeModal();
+    });
+
+    function editProduk(i) {
+      const p = produkList[i];
+      document.getElementById("editIndex").value = i;
+      document.getElementById("namaProduk").value = p.nama;
+      document.getElementById("hargaProduk").value = p.harga;
+      document.getElementById("asalProduk").value = p.asal;
+      document.getElementById("previewImage").src = p.gambar;
+      document.getElementById("previewImage").classList.remove("hidden");
+      openModal(true);
+    }
+
+    function hapusProduk(i) {
+      if (confirm("Hapus produk ini?")) {
+        produkList.splice(i, 1);
+        renderProduk();
+      }
+    }
+
+    renderProduk();
+  </script>
+</body>
+</html>

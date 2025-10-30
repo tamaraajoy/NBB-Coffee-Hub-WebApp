@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Admin - NBB Coffee Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .font-title { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="font-body bg-gray-100">
+
+  <!-- ✅ NAVBAR -->
+  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+       <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="admin_dashboard.html" class="hover:text-[#B8860B] transition font-semibold">Dashboard</a>
+        <a href="admin_produk.html" class="hover:text-[#B8860B] transition">Kelola Produk</a>
+        <a href="admin_blog.html" class="hover:text-[#B8860B] transition">Kelola Blog</a>
+        <a href="admin_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button id="open-profil" class="hover:text-[#B8860B] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ✅ MAIN -->
+  <main class="pt-28 pb-16 px-8 max-w-7xl mx-auto">
+    <section class="bg-[#654321]/80 backdrop-blur-sm text-[#EFEBE9] p-8 rounded-lg shadow-xl mb-12">
+      <h2 class="text-3xl font-title mb-2">Selamat Datang, Admin!</h2>
+      <p class="text-lg">Kelola produk, pantau harga kopi, dan atur konten blog untuk menjaga kualitas NBB Coffee Hub.</p>
+    </section>
+
+    <!-- ✅ RINGKASAN DATA -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-[#B8860B]">
+        <h3 class="text-gray-600">Total Produk</h3>
+        <p class="text-3xl font-semibold text-[#4B3832] mt-2">24</p>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-[#B8860B]">
+        <h3 class="text-gray-600">Stok Keseluruhan</h3>
+        <p class="text-3xl font-semibold text-[#4B3832] mt-2">875 kg</p>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-6 border-t-4 border-[#B8860B]">
+        <h3 class="text-gray-600">Total Artikel Blog</h3>
+        <p class="text-3xl font-semibold text-[#4B3832] mt-2">12</p>
+      </div>
+    </div>
+
+    <!-- ✅ GRAFIK PENJUALAN -->
+    <section class="bg-white p-8 rounded-lg shadow-md mb-12">
+      <h3 class="text-xl font-title text-[#4B3832] mb-4">Grafik Penjualan Bulanan</h3>
+      <canvas id="salesChart" height="100"></canvas>
+    </section>
+
+    <!-- ✅ AKSI CEPAT -->
+    <section class="grid md:grid-cols-3 gap-6">
+      <a href="admin_produk.html" class="bg-[#B8860B] text-white text-center py-6 rounded-lg hover:bg-[#9A7508] transition shadow-lg">
+        ➕ Tambah Produk Baru
+      </a>
+      <a href="admin_blog.html" class="bg-[#654321] text-white text-center py-6 rounded-lg hover:bg-[#4B3832] transition shadow-lg">
+        📝 Kelola Blog
+      </a>
+      <a href="admin_harga.html" class="bg-[#4B3832] text-white text-center py-6 rounded-lg hover:bg-[#3B2B25] transition shadow-lg">
+        💹 Pantau Harga Kopi Dunia
+      </a>
+    </section>
+  </main>
+
+  <!-- ✅ PROFIL PANEL -->
+  <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
+    <div class="flex justify-between items-center px-6 py-4 border-b">
+      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Admin</h3>
+      <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
+    </div>
+    <div class="p-6 space-y-4 text-sm">
+      <div><p class="text-gray-500">Nama</p><p class="font-medium">Admin NBB</p></div>
+      <div><p class="text-gray-500">Email</p><p class="font-medium">admin@nbbcoffeehub.com</p></div>
+      <div><p class="text-gray-500">Role</p><p class="font-medium">Administrator</p></div>
+      <div class="mt-6 flex flex-col space-y-3">
+        <a href="admin_login.html" class="block text-center border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition">Keluar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ FOOTER -->
+  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-12 mt-12">
+    <div class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div><h4 class="font-title text-xl mb-4">NBB Coffee Hub</h4><p class="text-sm text-gray-300">Platform yang menghubungkan petani, admin, dan pembeli kopi Nusantara.</p></div>
+      <div><h4 class="font-semibold mb-4">Navigasi Admin</h4><ul class="space-y-2 text-sm text-gray-300"><li><a href="admin_dashboard.html" class="hover:underline">Dashboard</a></li><li><a href="admin_produk.html" class="hover:underline">Kelola Produk</a></li><li><a href="admin_blog.html" class="hover:underline">Kelola Blog</a></li></ul></div>
+      <div><h4 class="font-semibold mb-4">Legal</h4><ul class="space-y-2 text-sm text-gray-300"><li><a href="#" class="hover:underline">Syarat & Ketentuan</a></li><li><a href="#" class="hover:underline">Kebijakan Privasi</a></li></ul></div>
+      <div><h4 class="font-semibold mb-4">Ikuti Kami</h4><p class="text-sm text-gray-300">Instagram • Facebook • X</p></div>
+    </div>
+    <div class="border-t border-[#B8860B]/50 mt-8 pt-4 text-center text-xs text-gray-400">&copy; 2025 NBB Coffee Hub Admin. All Rights Reserved.</div>
+  </footer>
+
+  <!-- ✅ SCRIPT -->
+  <script>
+    // buka/tutup profil
+    const openProfil = document.getElementById("open-profil");
+    const closeProfil = document.getElementById("close-profil");
+    const profilPanel = document.getElementById("profil-panel");
+    openProfil.addEventListener("click", () => profilPanel.classList.remove("translate-x-full"));
+    closeProfil.addEventListener("click", () => profilPanel.classList.add("translate-x-full"));
+
+    // grafik
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt'],
+        datasets: [{
+          label: 'Penjualan (kg)',
+          data: [80, 90, 100, 95, 120, 150, 170, 160, 155, 180],
+          backgroundColor: 'rgba(184, 134, 11, 0.8)',
+          borderRadius: 6,
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+  </script>
+</body>
+</html>

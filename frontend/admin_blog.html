@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Blog - NBB Coffee Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .font-title { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="font-body bg-gray-100">
+
+  <!-- ✅ NAVBAR -->
+  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="admin_dashboard.html" class="hover:text-[#B8860B] transition">Dashboard</a>
+        <a href="admin_produk.html" class="hover:text-[#B8860B] transition">Kelola Produk</a>
+        <a href="admin_blog.html" class="text-[#B8860B] font-semibold transition">Kelola Blog</a>
+        <a href="admin_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button id="open-profil" class="hover:text-[#B8860B] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ✅ MAIN -->
+  <main class="container mx-auto py-10 px-6 pt-28">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-title text-[#4B3832]">Manajemen Blog</h2>
+      <button onclick="openModal()" class="bg-[#B8860B] text-white px-5 py-2 rounded-md shadow hover:bg-yellow-700">
+        + Tambah Artikel
+      </button>
+    </div>
+
+    <div id="blogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </main>
+
+  <!-- ✅ MODAL -->
+  <div id="blogModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 overflow-y-auto">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg my-10">
+      <h3 id="modalTitle" class="text-xl font-semibold mb-4">Tambah Artikel</h3>
+      <form id="blogForm" class="space-y-4">
+        <input type="hidden" id="editIndex">
+        <div>
+          <label class="block text-gray-700">Judul Artikel</label>
+          <input id="judulBlog" type="text" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
+        </div>
+        <div>
+          <label class="block text-gray-700">Penulis</label>
+          <input id="penulisBlog" type="text" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
+        </div>
+        <div>
+          <label class="block text-gray-700">Tanggal</label>
+          <input id="tanggalBlog" type="date" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
+        </div>
+        <div>
+          <label class="block text-gray-700">Isi Artikel</label>
+          <textarea id="isiBlog" rows="6" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required></textarea>
+        </div>
+        <div>
+          <label class="block text-gray-700">Gambar Utama</label>
+          <input id="gambarBlog" type="file" accept="image/*" class="w-full border rounded-md px-3 py-2" onchange="previewGambar(event)">
+          <img id="previewImage" class="mt-3 w-32 h-32 object-cover rounded-md hidden">
+        </div>
+        <div class="flex justify-end space-x-3">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Batal</button>
+          <button type="submit" class="px-4 py-2 bg-[#B8860B] text-white rounded-md hover:bg-yellow-700">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ PROFIL PANEL -->
+  <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
+    <div class="flex justify-between items-center px-6 py-4 border-b">
+      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Admin</h3>
+      <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
+    </div>
+    <div class="p-6 space-y-4 text-sm">
+      <div><p class="text-gray-500">Nama</p><p class="font-medium">Admin NBB</p></div>
+      <div><p class="text-gray-500">Email</p><p class="font-medium">admin@nbbcoffeehub.com</p></div>
+      <div><p class="text-gray-500">Role</p><p class="font-medium">Administrator</p></div>
+      <div class="mt-6 flex flex-col space-y-3">
+        <a href="admin_login.html" class="block text-center border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition">Keluar</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ FOOTER -->
+  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-6 mt-12 text-center text-sm">
+    &copy; 2025 NBB Coffee Hub. All rights reserved.
+  </footer>
+
+  <!-- ✅ SCRIPT -->
+  <script>
+    const openProfil = document.getElementById("open-profil");
+    const closeProfil = document.getElementById("close-profil");
+    const profilPanel = document.getElementById("profil-panel");
+    openProfil.addEventListener("click", () => profilPanel.classList.remove("translate-x-full"));
+    closeProfil.addEventListener("click", () => profilPanel.classList.add("translate-x-full"));
+
+    let blogList = JSON.parse(localStorage.getItem("blogList")) || [];
+    function renderBlog() {
+      const grid = document.getElementById("blogGrid");
+      grid.innerHTML = "";
+      blogList.forEach((b, i) => {
+        grid.innerHTML += `
+          <div class="bg-white rounded-xl shadow-md p-4">
+            <img src="${b.gambar}" alt="${b.judul}" class="w-full h-48 object-cover rounded-lg mb-4">
+            <h3 class="font-semibold text-lg text-[#4B3832] mb-1">${b.judul}</h3>
+            <p class="text-sm text-gray-500 mb-2">By ${b.penulis} • ${b.tanggal}</p>
+            <p class="text-gray-600 text-sm mb-3">${b.isi.substring(0, 80)}...</p>
+            <div class="flex justify-between">
+              <button onclick="editBlog(${i})" class="px-3 py-1 bg-yellow-500 text-white rounded-md text-sm hover:bg-yellow-600">Edit</button>
+              <button onclick="hapusBlog(${i})" class="px-3 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600">Hapus</button>
+            </div>
+          </div>`;
+      });
+      localStorage.setItem("blogList", JSON.stringify(blogList));
+    }
+
+    function openModal(editMode = false) {
+      document.getElementById("blogModal").classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+      document.getElementById("modalTitle").textContent = editMode ? "Edit Artikel" : "Tambah Artikel";
+    }
+    function closeModal() {
+      document.getElementById("blogModal").classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+      document.getElementById("blogForm").reset();
+      document.getElementById("previewImage").classList.add("hidden");
+      document.getElementById("editIndex").value = "";
+    }
+    function previewGambar(e) {
+      const img = document.getElementById("previewImage");
+      img.src = URL.createObjectURL(e.target.files[0]);
+      img.classList.remove("hidden");
+    }
+
+    document.getElementById("blogForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const judul = document.getElementById("judulBlog").value;
+      const penulis = document.getElementById("penulisBlog").value;
+      const tanggal = document.getElementById("tanggalBlog").value;
+      const isi = document.getElementById("isiBlog").value;
+      const fileInput = document.getElementById("gambarBlog");
+      const imgURL = fileInput.files[0] ? URL.createObjectURL(fileInput.files[0]) : "https://via.placeholder.com/150";
+      const editIndex = document.getElementById("editIndex").value;
+
+      if (editIndex) blogList[editIndex] = { judul, penulis, tanggal, isi, gambar: imgURL };
+      else blogList.push({ judul, penulis, tanggal, isi, gambar: imgURL });
+      renderBlog();
+      closeModal();
+    });
+
+    function editBlog(i) {
+      const b = blogList[i];
+      document.getElementById("editIndex").value = i;
+      document.getElementById("judulBlog").value = b.judul;
+      document.getElementById("penulisBlog").value = b.penulis;
+      document.getElementById("tanggalBlog").value = b.tanggal;
+      document.getElementById("isiBlog").value = b.isi;
+      document.getElementById("previewImage").src = b.gambar;
+      document.getElementById("previewImage").classList.remove("hidden");
+      openModal(true);
+    }
+    function hapusBlog(i) {
+      if (confirm("Hapus artikel ini?")) {
+        blogList.splice(i, 1);
+        renderBlog();
+      }
+    }
+
+    renderBlog();
+  </script>
+</body>
+</html>

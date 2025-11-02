@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akun Petani - NBB Coffee Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #FAF9F6; }
+    .font-title { font-family: 'Playfair Display', serif; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ✅ NAVBAR -->
+  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="petani_dashboard.html" class="hover:text-[#B8860B] transition">Dashboard</a>
+        <a href="petani_produk.html" class="hover:text-[#B8860B] transition">Kelola Produk</a>
+        <a href="petani_blog.html" class="hover:text-[#B8860B] transition">Kelola Blog</a>
+        <a href="petani_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button id="open-profil" class="text-[#B8860B] font-semibold transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ✅ PROFIL PANEL -->
+  <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
+    <div class="flex justify-between items-center px-6 py-4 border-b">
+      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Petani</h3>
+      <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
+    </div>
+    <div class="p-6 space-y-4 text-sm" id="profil-panel-data">
+      <p class="text-gray-500 italic">Memuat data...</p>
+    </div>
+  </div>
+
+  <!-- ✅ MAIN -->
+  <main class="flex-grow max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8 mt-28 mb-12">
+    <div class="flex flex-col items-center mb-8">
+      <img id="fotoAkun" src="default-profile.png" alt="Foto Profil Petani" class="w-32 h-32 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
+      <h2 class="text-2xl font-title mt-3 text-[#4B3832]">Profil Petani</h2>
+    </div>
+
+    <div id="infoPetani" class="space-y-4 text-center"></div>
+  </main>
+
+  <script>
+    // ✅ Menampilkan data profil di halaman akun
+    document.addEventListener("DOMContentLoaded", () => {
+      const data = JSON.parse(localStorage.getItem("profilPetani"));
+      const container = document.getElementById("infoPetani");
+      const fotoAkun = document.getElementById("fotoAkun");
+
+      if (!data) {
+        container.innerHTML = `<p class="text-gray-500 italic">Belum ada data profil. Silakan <a href='petani_editprofil.html' class='text-[#B8860B] underline'>isi profil terlebih dahulu</a>.</p>`;
+        return;
+      }
+
+      fotoAkun.src = data.foto || "default-profile.png";
+      container.innerHTML = `
+        <div><p class="text-gray-500 text-sm">Nama Lengkap</p><p class="text-gray-800 font-medium">${data.nama}</p></div>
+        <div><p class="text-gray-500 text-sm">Email</p><p class="text-gray-800 font-medium">${data.email}</p></div>
+        <div><p class="text-gray-500 text-sm">Nomor Telepon</p><p class="text-gray-800 font-medium">${data.telepon}</p></div>
+        <div><p class="text-gray-500 text-sm">Nama Toko / Kebun</p><p class="text-gray-800 font-medium">${data.toko}</p></div>
+        <div><p class="text-gray-500 text-sm">Alamat</p><p class="text-gray-800 font-medium">${data.alamat}</p></div>
+        <div><p class="text-gray-500 text-sm">Wilayah</p><p class="text-gray-800 font-medium">${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p></div>
+        <div><p class="text-gray-500 text-sm">Luas Lahan</p><p class="text-gray-800 font-medium">${data.luas} hektar</p></div>
+        <div><p class="text-gray-500 text-sm">Jenis Kopi yang Ditanam</p><p class="text-gray-800 font-medium">${data.jenis}</p></div>
+        <div><p class="text-gray-500 text-sm">Deskripsi</p><p class="text-gray-800 font-medium">${data.deskripsi}</p></div>
+        <div class="pt-6">
+          <a href="petani_editprofil.html" class="inline-block bg-[#B8860B] text-white px-6 py-2 rounded-lg hover:bg-[#654321] transition">Edit Profil</a>
+        </div>
+      `;
+    });
+
+    // ✅ Panel profil (sinkron dengan halaman lain)
+    document.addEventListener("DOMContentLoaded", () => {
+      const panel = document.getElementById("profil-panel");
+      const openBtn = document.getElementById("open-profil");
+      const closeBtn = document.getElementById("close-profil");
+      const container = document.getElementById("profil-panel-data");
+
+      openBtn?.addEventListener("click", () => {
+        const data = JSON.parse(localStorage.getItem("profilPetani"));
+        if (!data) {
+          container.innerHTML = `<p class="text-gray-500 italic">Data profil belum diisi.<br><a href='petani_akun.html' class='text-[#B8860B] underline'>Lihat Profil</a></p>`;
+        } else {
+          container.innerHTML = `
+            <div><p class="text-gray-500">Nama</p><p class="font-medium">${data.nama}</p></div>
+            <div><p class="text-gray-500">Email</p><p class="font-medium">${data.email}</p></div>
+            <div><p class="text-gray-500">Alamat</p><p class="font-medium">${data.alamat}</p></div>
+            <div class="mt-6 flex flex-col space-y-3">
+              <a href="petani_akun.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
+              <button id="logout-btn" class="border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Keluar</button>
+            </div>
+          `;
+        }
+        panel.classList.remove("translate-x-full");
+      });
+
+      closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
+    });
+  </script>
+
+</body>
+</html>

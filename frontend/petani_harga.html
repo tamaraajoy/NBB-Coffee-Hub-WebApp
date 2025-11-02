@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Harga Kopi - NBB Coffee Hub</title>
+  <title>Harga Kopi - NBB Coffee Hub (Petani)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -20,17 +20,12 @@
     <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
       <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
       <nav class="hidden md:flex space-x-8 font-medium">
-        <a href="pembeli_dashboard.html" class="hover:text-[#B8860B] transition">Beranda</a>
-        <a href="pembeli_produk.html" class="hover:text-[#B8860B] transition">Produk</a>
-        <a href="pembeli_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
-        <a href="pembeli_harga.html" class="text-[#B8860B] font-semibold">Harga Kopi</a>
+        <a href="petani_dashboard.html" class="hover:text-[#B8860B] transition">Dashboard</a>
+        <a href="petani_produk.html" class="hover:text-[#B8860B] transition">Kelola Produk</a>
+        <a href="petani_blog.html" class="hover:text-[#B8860B] transition">Kelola Blog</a>
+        <a href="petani_harga.html" class="text-[#B8860B] font-semibold transition">Harga Kopi</a>
       </nav>
       <div class="flex items-center space-x-4">
-        <a href="pembeli_keranjang.html" class="hover:text-[#B8860B] transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M15 13a2 2 0 11-4 0 2 2 0 014 0zM19 13a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-        </a>
         <button id="open-profil" class="hover:text-[#B8860B] transition">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -44,6 +39,7 @@
   <main class="pt-28 pb-16 px-8 max-w-6xl mx-auto">
     <section class="bg-[#654321]/80 backdrop-blur-sm text-[#EFEBE9] p-8 rounded-lg shadow-xl mb-12 text-center">
       <h2 class="text-3xl font-title mb-2">Harga Kopi Dunia (Real-Time)</h2>
+      <p class="text-sm text-gray-200">Pantau harga kopi global untuk mendukung keputusan penjualan Anda.</p>
     </section>
 
     <!-- ✅ TABEL -->
@@ -70,23 +66,44 @@
     </div>
   </main>
 
-  <!-- ✅ PROFIL PANEL -->
   <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
     <div class="flex justify-between items-center px-6 py-4 border-b">
-      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Pengguna</h3>
+      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Petani</h3>
       <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
     </div>
-    <div class="p-6 space-y-4 text-sm">
-      <div><p class="text-gray-500">Nama</p><p class="font-medium">Theodora Walukow</p></div>
-      <div><p class="text-gray-500">Email</p><p class="font-medium">theodora@gmail.com</p></div>
-      <div><p class="text-gray-500">No. Telepon</p><p class="font-medium">+62000000</p></div>
-      <div><p class="text-gray-500">Alamat</p><p class="font-medium">Bandung, Jawa Barat</p></div>
-      <div class="mt-6 flex flex-col space-y-3">
-        <a href="edit_profil.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
-        <button id="logout-btn" class="border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Keluar</button>
-      </div>
+    <div class="p-6 space-y-4 text-sm" id="profil-panel-data">
+      <p class="text-gray-500 italic">Memuat data...</p>
     </div>
   </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const panel = document.getElementById("profil-panel");
+    const openBtn = document.getElementById("open-profil");
+    const closeBtn = document.getElementById("close-profil");
+    const container = document.getElementById("profil-panel-data");
+
+    openBtn?.addEventListener("click", () => {
+      const data = JSON.parse(localStorage.getItem("profilPetani"));
+      if (!data) {
+        container.innerHTML = `<p class="text-gray-500 italic">Data profil belum diisi.<br><a href='petani_akun.html' class='text-[#B8860B] underline'>Lihat Profil</a></p>`;
+      } else {
+        container.innerHTML = `
+          <div><p class="text-gray-500">Nama</p><p class="font-medium">${data.nama}</p></div>
+          <div><p class="text-gray-500">Email</p><p class="font-medium">${data.email}</p></div>
+          <div><p class="text-gray-500">Alamat</p><p class="font-medium">${data.alamat}</p></div>
+          <div class="mt-6 flex flex-col space-y-3">
+            <a href="petani_akun.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
+            <button id="logout-btn" class="border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Keluar</button>
+          </div>
+        `;
+      }
+      panel.classList.remove("translate-x-full");
+    });
+
+    closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
+  });
+  </script>
 
   <!-- ✅ FOOTER -->
   <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">

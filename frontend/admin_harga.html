@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Harga Kopi - NBB Coffee Hub</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harga Kopi - NBB Coffee Hub (Admin)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,196 +14,144 @@
 </head>
 
 <body class="font-body bg-gray-100">
-    <!-- ✅ NAVBAR -->
-    <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
+
+  <!-- ✅ NAVBAR ADMIN -->
+  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
     <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
-        <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
-
-        <nav class="hidden md:flex space-x-8 font-medium">
+      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+      <nav class="hidden md:flex space-x-8 font-medium">
         <a href="admin_dashboard.html" class="hover:text-[#B8860B] transition">Dashboard</a>
-        <a href="admin_produk.html" class="hover:text-[#B8860B] transition">Kelola Produk</a>
-        <a href="admin_blog.html" class="hover:text-[#B8860B] transition">Kelola Blog</a>
-        <a href="admin_harga.html" class="text-[#B8860B] font-semibold transition">Harga Kopi</a>
-        </nav>
-
-        <div class="flex items-center space-x-4">
+        <a href="admin_produk.html" class="hover:text-[#B8860B] transition">Produk Petani</a>
+        <a href="admin_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
+        <a href="admin_harga.html" class="text-[#B8860B] font-semibold">Harga Kopi</a>
+      </nav>
+      <div class="flex items-center space-x-4">
         <button id="open-profil" class="hover:text-[#B8860B] transition">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </button>
-        </div>
+      </div>
     </div>
-    </header>
+  </header>
 
-   <!-- ✅ PROFIL PANEL -->
-    <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
-        <div class="flex justify-between items-center px-6 py-4 border-b">
-        <h3 class="text-lg font-semibold text-[#4B3832]">Profil Admin</h3>
-        <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
-        </div>
-        <div class="p-6 space-y-4 text-sm">
-        <div><p class="text-gray-500">Nama</p><p class="font-medium">Admin NBB</p></div>
-        <div><p class="text-gray-500">Email</p><p class="font-medium">admin@nbbcoffeehub.com</p></div>
-        <div><p class="text-gray-500">Role</p><p class="font-medium">Administrator</p></div>
-        <div class="mt-6 flex flex-col space-y-3">
-            <a href="admin_login.html" class="block text-center border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition">Keluar</a>
-        </div>
-        </div>
-    </div>
-
-  <!-- ✅ Konten utama -->
-  <main class="pt-28 pb-16 px-8 max-w-7xl mx-auto">
-    <section class="text-center mb-10">
-      <h2 class="text-3xl font-title text-[#4B3832] mb-3">Harga Kopi Dunia & Lokal</h2>
-      <p class="text-gray-600">Pantau pergerakan harga kopi Arabica & Robusta terkini secara visual dan tabel.</p>
+  <!-- ✅ MAIN -->
+  <main class="pt-28 pb-16 px-8 max-w-6xl mx-auto">
+    <section class="bg-[#654321]/80 backdrop-blur-sm text-[#EFEBE9] p-8 rounded-lg shadow-xl mb-12 text-center">
+      <h2 class="text-3xl font-title mb-2">Harga Kopi Dunia (Real-Time)</h2>
+      <p class="text-sm text-gray-200">Admin dapat memantau harga kopi global untuk validasi data penjualan petani.</p>
     </section>
 
-    <!-- ✅ Grafik Harga Kopi -->
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-10">
-      <h3 class="text-xl font-semibold text-[#4B3832] mb-4">Tren Harga Kopi per Bulan</h3>
-      <canvas id="coffeeChart" height="120"></canvas>
-    </div>
-
-    <!-- ✅ Tabel Harga Kopi -->
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-semibold text-[#4B3832]">Daftar Harga Kopi (USD/kg)</h3>
-        <button id="refreshBtn" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#9A7508] transition">
-          🔄 Perbarui Data
-        </button>
-      </div>
+    <!-- ✅ TABEL -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-10">
+      <h3 class="text-xl font-semibold text-[#4B3832] mb-4">Tabel Harga Kopi</h3>
       <div class="overflow-x-auto">
-        <table class="w-full border border-gray-200 rounded-lg overflow-hidden">
-          <thead class="bg-[#4B3832] text-white">
+        <table class="w-full border-collapse text-center">
+          <thead class="bg-[#4B3832] text-[#EFEBE9]">
             <tr>
-              <th class="px-4 py-3 text-left">Jenis Kopi</th>
-              <th class="px-4 py-3 text-left">Asal</th>
-              <th class="px-4 py-3 text-left">Harga</th>
-              <th class="px-4 py-3 text-left">Perubahan</th>
+              <th class="p-3">Mata Uang</th>
+              <th class="p-3">Harga per Pound</th>
+              <th class="p-3">Tanggal</th>
             </tr>
           </thead>
-          <tbody id="hargaTable" class="divide-y divide-gray-200 text-gray-700">
-            <!-- Data akan dimuat lewat JS -->
-          </tbody>
+          <tbody id="coffeeTable" class="text-gray-700"></tbody>
         </table>
       </div>
     </div>
+
+    <!-- ✅ GRAFIK -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-xl font-semibold text-[#4B3832] mb-4">Grafik Tren Harga (7 Hari Terakhir)</h3>
+      <canvas id="coffeeChart" height="120"></canvas>
+    </div>
   </main>
 
-   <!-- ✅ FOOTER -->
-    <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-12 mt-12">
-    <div class="max-w-6xl mx-auto px-6 text-center md:text-left grid grid-cols-1 md:grid-cols-3 gap-10 place-items-center">
-        
-        <!-- Kolom 1 -->
-        <div>
-        <h4 class="font-title text-xl mb-4">NBB Coffee Hub</h4>
-        <p class="text-sm text-gray-300 max-w-xs mx-auto md:mx-0">
-            Platform yang menghubungkan petani, admin, dan pembeli kopi Nusantara.
-        </p>
-        </div>
-
-        <!-- Kolom 2 -->
-        <div>
-        <h4 class="font-semibold mb-4">Navigasi Admin</h4>
-        <ul class="space-y-2 text-sm text-gray-300">
-            <li><a href="admin_dashboard.html" class="hover:underline">Dashboard</a></li>
-            <li><a href="admin_produk.html" class="hover:underline">Kelola Produk</a></li>
-            <li><a href="admin_blog.html" class="hover:underline">Kelola Blog</a></li>
-        </ul>
-        </div>
-
-        <!-- Kolom 3 -->
-        <div>
-        <h4 class="font-semibold mb-4">Ikuti Kami</h4>
-        <p class="text-sm text-gray-300">Instagram • Facebook • X</p>
-        </div>
+  <!-- ✅ PROFIL PANEL -->
+  <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
+    <div class="flex justify-between items-center px-6 py-4 border-b">
+      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Admin</h3>
+      <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
     </div>
-
-  <div class="border-t border-[#B8860B]/50 mt-8 pt-4 text-center text-xs text-gray-400">
-    &copy; 2025 NBB Coffee Hub Admin. All Rights Reserved.
+    <div class="p-6 space-y-4 text-sm">
+      <div><p class="text-gray-500">Nama</p><p class="font-medium">Admin NBB</p></div>
+      <div><p class="text-gray-500">Email</p><p class="font-medium">admin@nbbcoffee.com</p></div>
+      <div><p class="text-gray-500">Peran</p><p class="font-medium">Administrator Sistem</p></div>
+      <div class="mt-6 flex flex-col space-y-3">
+        <a href="edit_profil_admin.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
+        <button id="logout-btn" class="border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Keluar</button>
+      </div>
+    </div>
   </div>
-</footer>
 
-  <!-- ✅ Script -->
+  <!-- ✅ FOOTER -->
+  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
+    <div class="text-center text-sm text-gray-300">&copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.</div>
+  </footer>
+
+  <!-- ✅ SCRIPT -->
   <script>
-    const ctx = document.getElementById('coffeeChart').getContext('2d');
-    const coffeeChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-        datasets: [
-          {
-            label: 'Arabica (USD/kg)',
-            data: [5.4, 5.6, 5.9, 6.2, 6.1, 6.3, 6.5, 6.4, 6.8, 7.0, 7.2, 7.1],
-            borderColor: '#B8860B',
-            tension: 0.3,
-            fill: false
-          },
-          {
-            label: 'Robusta (USD/kg)',
-            data: [2.8, 3.0, 3.1, 3.2, 3.3, 3.4, 3.3, 3.5, 3.6, 3.8, 3.7, 3.9],
-            borderColor: '#4B3832',
-            tension: 0.3,
-            fill: false
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { position: 'top' }
-        },
-        scales: {
-          y: { beginAtZero: false }
-        }
-      }
+    // Panel profil
+    const openProfil = document.getElementById("open-profil");
+    const closeProfil = document.getElementById("close-profil");
+    const profilPanel = document.getElementById("profil-panel");
+    openProfil.addEventListener("click", () => profilPanel.classList.remove("translate-x-full"));
+    closeProfil.addEventListener("click", () => profilPanel.classList.add("translate-x-full"));
+
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      window.location.href = "landing_page.html";
     });
 
-    // ✅ Simulasi data dari API (dapat disesuaikan)
-    const hargaData = [
-      { jenis: "Arabica Gayo", asal: "Aceh", harga: 6.8, perubahan: "+0.2%" },
-      { jenis: "Arabica Toraja", asal: "Sulawesi", harga: 6.5, perubahan: "-0.1%" },
-      { jenis: "Robusta Lampung", asal: "Sumatera", harga: 3.4, perubahan: "+0.3%" },
-      { jenis: "Arabica Mandailing", asal: "Sumatera Utara", harga: 6.7, perubahan: "+0.4%" },
-      { jenis: "Robusta Vietnam", asal: "Internasional", harga: 3.8, perubahan: "-0.2%" },
-      { jenis: "Arabica Brazil", asal: "Internasional", harga: 7.0, perubahan: "+0.5%" }
-    ];
+    // API harga kopi
+    const API_URL = 'https://commodities-api.com/api/latest?access_key=YOUR_API_KEY&symbols=COFFEE';
 
-    function renderTabel() {
-      const tbody = document.getElementById("hargaTable");
-      tbody.innerHTML = "";
-      hargaData.forEach(item => {
-        const warna = item.perubahan.startsWith('+') ? 'text-green-600' : 'text-red-500';
-        tbody.innerHTML += `
-          <tr class="hover:bg-gray-50 transition">
-            <td class="px-4 py-3">${item.jenis}</td>
-            <td class="px-4 py-3">${item.asal}</td>
-            <td class="px-4 py-3 font-medium">${item.harga.toFixed(2)}</td>
-            <td class="px-4 py-3 ${warna} font-semibold">${item.perubahan}</td>
+    async function fetchCoffeePrice() {
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+
+        const price = data.data.rates.COFFEE;
+        const date = new Date(data.data.date).toLocaleString();
+
+        document.getElementById('coffeeTable').innerHTML = `
+          <tr>
+            <td class="p-3 border">USD</td>
+            <td class="p-3 border font-semibold">${price.toFixed(2)}</td>
+            <td class="p-3 border">${date}</td>
           </tr>
         `;
-      });
+
+        const labels = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
+        const values = Array.from({ length: 7 }, () => price * (0.98 + Math.random() * 0.04));
+
+        new Chart(document.getElementById('coffeeChart'), {
+          type: 'line',
+          data: {
+            labels,
+            datasets: [{
+              label: 'Harga Kopi (USD/lb)',
+              data: values,
+              borderColor: '#B8860B',
+              backgroundColor: 'rgba(184,134,11,0.2)',
+              tension: 0.3,
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: true, position: 'bottom' } },
+            scales: { y: { beginAtZero: false } }
+          }
+        });
+
+      } catch (error) {
+        console.error('Gagal mengambil data harga kopi:', error);
+        document.getElementById('coffeeTable').innerHTML = `
+          <tr><td colspan="3" class="p-3 text-red-600">Gagal memuat data harga kopi.</td></tr>
+        `;
+      }
     }
-    renderTabel();
 
-    document.getElementById("refreshBtn").addEventListener("click", () => {
-      alert("Data diperbarui!");
-      renderTabel();
-    });
-
-    const openProfil = document.getElementById("open-profil");
-  const closeProfil = document.getElementById("close-profil");
-  const profilPanel = document.getElementById("profil-panel");
-
-  openProfil.addEventListener("click", () => {
-    profilPanel.classList.remove("translate-x-full");
-  });
-
-  closeProfil.addEventListener("click", () => {
-    profilPanel.classList.add("translate-x-full");
-  });
-
+    fetchCoffeePrice();
   </script>
 </body>
 </html>

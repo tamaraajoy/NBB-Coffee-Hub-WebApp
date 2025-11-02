@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profil Pembeli - NBB Coffee Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #FAF9F6; }
+    .font-title { font-family: 'Playfair Display', serif; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ✅ NAVBAR -->
+  <header class="bg-[#4B3832]/90 text-[#EFEBE9] fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto">
+    </div>
+  </header>
+
+  <!-- ✅ MAIN -->
+  <main class="flex-grow max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8 mt-28 mb-12">
+    <h2 class="text-2xl font-title mb-6 text-[#4B3832] text-center">Edit Profil Pembeli</h2>
+
+    <form id="editForm" class="space-y-5">
+      <!-- Foto -->
+      <div class="flex flex-col items-center">
+        <img id="previewFoto" src="default-profile.png" class="w-28 h-28 rounded-full object-cover mb-3 border border-gray-300">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Foto Profil</label>
+        <input type="file" id="fotoProfil" accept="image/*" class="text-sm text-gray-600">
+      </div>
+
+      <div>
+        <label class="block text-gray-700 text-sm mb-1">Nama Lengkap</label>
+        <input type="text" id="nama" placeholder="Masukkan nama lengkap" class="w-full border border-gray-300 rounded-lg p-2">
+      </div>
+
+      <div>
+        <label class="block text-gray-700 text-sm mb-1">Email</label>
+        <input type="email" id="email" placeholder="email@nbbcoffee.com" class="w-full border border-gray-300 rounded-lg p-2">
+      </div>
+
+      <div>
+        <label class="block text-gray-700 text-sm mb-1">Nomor Telepon</label>
+        <input type="tel" id="telepon" placeholder="+62 812 3456 7890" class="w-full border border-gray-300 rounded-lg p-2">
+      </div>
+
+      <div>
+        <label class="block text-gray-700 text-sm mb-1">Alamat Lengkap</label>
+        <textarea id="alamat" placeholder="Jl. Kopi No. 5, Desa Rantepao" class="w-full border border-gray-300 rounded-lg p-2"></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 text-sm mb-1">Kecamatan</label>
+          <input type="text" id="kecamatan" placeholder="Kecamatan Rantepao" class="w-full border border-gray-300 rounded-lg p-2">
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm mb-1">Kota / Kabupaten</label>
+          <input type="text" id="kota" placeholder="Kabupaten Toraja Utara" class="w-full border border-gray-300 rounded-lg p-2">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 text-sm mb-1">Provinsi</label>
+          <input type="text" id="provinsi" placeholder="Sulawesi Selatan" class="w-full border border-gray-300 rounded-lg p-2">
+        </div>
+        <div>
+          <label class="block text-gray-700 text-sm mb-1">Kode Pos</label>
+          <input type="text" id="kodepos" placeholder="91831" class="w-full border border-gray-300 rounded-lg p-2">
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-4 pt-4">
+        <button id="batalBtn" type="button" class="px-6 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">Batal</button>
+        <button type="submit" class="px-6 py-2 bg-[#B8860B] text-white rounded-lg hover:bg-[#654321]">Simpan</button>
+      </div>
+    </form>
+  </main>
+
+   <!-- ✅ FOOTER -->
+  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
+    <div class="text-center text-sm text-gray-300">&copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.</div>
+  </footer>
+
+  <script>
+    const form = document.getElementById("editForm");
+    const fotoInput = document.getElementById("fotoProfil");
+    const preview = document.getElementById("previewFoto");
+
+    fotoInput.addEventListener("change", () => {
+      const file = fotoInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => (preview.src = e.target.result);
+        reader.readAsDataURL(file);
+      }
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = {
+        nama: document.getElementById("nama").value,
+        email: document.getElementById("email").value,
+        telepon: document.getElementById("telepon").value,
+        alamat: document.getElementById("alamat").value,
+        kecamatan: document.getElementById("kecamatan").value,
+        kota: document.getElementById("kota").value,
+        provinsi: document.getElementById("provinsi").value,
+        kodepos: document.getElementById("kodepos").value,
+        foto: preview.src || "default-profile.png"
+      };
+
+      localStorage.setItem("profilPembeli", JSON.stringify(data));
+      alert("Profil berhasil disimpan!");
+      window.location.href = "pembeli_akun.html";
+    });
+
+    document.getElementById("batalBtn").addEventListener("click", () => {
+      window.location.href = "pembeli_beranda.html";
+    });
+  </script>
+</body>
+</html>

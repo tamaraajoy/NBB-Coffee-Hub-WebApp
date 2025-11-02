@@ -13,25 +13,18 @@
 </head>
 <body class="font-body bg-gray-100">
 
-  <!-- NAVBAR (tidak diubah) -->
+  <!-- NAVBAR -->
   <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
     <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
-       <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
       <nav class="hidden md:flex space-x-8 font-medium">
-        <a href="pembeli_dashboard.html" class="hover:text-[#B8860B] transition">Beranda</a>
+        <a href="pembeli_beranda.html" class="hover:text-[#B8860B] transition">Beranda</a>
         <a href="pembeli_produk.html" class="text-[#B8860B] font-semibold">Produk</a>
-        <a href="pembeli_produk.html" class="hover:text-[#B8860B] transition">Blog</a>
-        <a href="pembeli_harga.html" class="hover:text-brown-600 font-semibold">Harga Kopi</a>
+        <a href="pembeli_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
+        <a href="pembeli_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
       </nav>
 
       <div class="flex items-center space-x-4">
-        <div class="relative hidden md:block">
-          <input id="searchInput" type="text" placeholder="Cari kopi..." class="bg-transparent border border-[#EFEBE9] rounded-full pl-8 pr-4 py-1 text-sm text-[#EFEBE9] placeholder-[#EFEBE9]/70 focus:outline-none focus:ring-1 focus:ring-[#B8860B]">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-2 top-2 text-[#EFEBE9]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
-
         <a href="pembeli_keranjang.html" class="hover:text-[#B8860B] transition">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M15 13a2 2 0 11-4 0 2 2 0 014 0zM19 13a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -50,8 +43,22 @@
   <main class="pt-28 pb-16 px-8 max-w-7xl mx-auto">
     <h2 class="text-3xl font-title text-[#4B3832] mb-8">Daftar Produk Kopi</h2>
 
-    <!-- FILTER -->
+    <!-- FILTER + SEARCH -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-10 flex flex-wrap gap-4 items-center justify-between">
+
+      <!-- 🔍 Kotak pencarian -->
+      <div class="relative flex-grow max-w-md">
+        <input id="searchInput" type="text" placeholder="Cari kopi..." 
+               class="w-full border border-gray-300 rounded-full pl-10 pr-4 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#B8860B]">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             class="h-5 w-5 absolute left-3 top-2.5 text-gray-500" 
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+
+      <!-- Dropdown filter -->
       <div class="flex gap-4 flex-wrap">
         <select id="filterKategori" class="border border-gray-300 rounded-md px-3 py-2 focus:ring-[#B8860B] focus:outline-none">
           <option value="">Semua Kategori</option>
@@ -76,7 +83,10 @@
         </select>
       </div>
 
-      <button onclick="resetFilter()" class="bg-[#B8860B] text-white px-5 py-2 rounded-lg hover:bg-[#654321] transition">Reset Filter</button>
+      <!-- Tombol reset -->
+      <button onclick="resetFilter()" class="bg-[#B8860B] text-white px-5 py-2 rounded-lg hover:bg-[#654321] transition">
+        Reset Filter
+      </button>
     </div>
 
     <!-- GRID PRODUK -->
@@ -98,32 +108,63 @@
     </div>
   </div>
 
-  <!-- PANEL PROFIL -->
-  <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
-    <div class="flex justify-between items-center px-6 py-4 border-b">
-      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Pengguna</h3>
-      <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
-    </div>
-    <div class="p-6 space-y-4 text-sm">
-      <div><p class="text-gray-500">Nama</p><p class="font-medium">Theodora Walukow</p></div>
-      <div><p class="text-gray-500">Email</p><p class="font-medium">theodora@gmail.com</p></div>
-      <div><p class="text-gray-500">No. Telepon</p><p class="font-medium">+6200000</p></div>
-      <div><p class="text-gray-500">Alamat</p><p class="font-medium">Bandung, Jawa Barat</p></div>
-      <div class="mt-6 flex flex-col space-y-3">
-        <a href="edit_profil.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
-        <button id="logout-btn" class="border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Keluar</button>
-      </div>
-    </div>
+<!-- ✅ PROFIL PANEL PEMBELI -->
+<div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
+  <div class="flex justify-between items-center px-6 py-4 border-b bg-[#4B3832]/90 text-[#EFEBE9]">
+    <h3 class="text-lg font-semibold">Profil Pembeli</h3>
+    <button id="close-profil" class="text-gray-200 hover:text-red-400 text-2xl">&times;</button>
   </div>
 
-  <!-- SCRIPT -->
-  <script>
-    const openProfil = document.getElementById("open-profil");
-    const closeProfil = document.getElementById("close-profil");
-    const profilPanel = document.getElementById("profil-panel");
-    openProfil.addEventListener("click", () => profilPanel.classList.remove("translate-x-full"));
-    closeProfil.addEventListener("click", () => profilPanel.classList.add("translate-x-full"));
-  </script>
+  <div class="p-6 space-y-4 text-sm" id="profil-panel-data">
+    <p class="text-gray-500 italic">Memuat data...</p>
+  </div>
+
+  <div class="p-6 border-t text-center">
+    <a href="pembeli_editprofil.html" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">Edit Profil</a>
+  </div>
+</div>
+
+<!-- ✅ SCRIPT PROFIL PANEL -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const panel = document.getElementById("profil-panel");
+    const openBtn = document.getElementById("open-profil");
+    const closeBtn = document.getElementById("close-profil");
+    const panelData = document.getElementById("profil-panel-data");
+
+    // buka & tutup panel
+    openBtn?.addEventListener("click", () => panel.classList.remove("translate-x-full"));
+    closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
+
+    // ambil data dari localStorage
+    const data = JSON.parse(localStorage.getItem("profilPembeli"));
+
+    if (!data) {
+      panelData.innerHTML = `
+        <p class='text-gray-500 italic'>Belum ada data profil.</p>
+        <p><a href='pembeli_editprofil.html' class='text-[#B8860B] underline'>Isi profil di sini</a></p>
+      `;
+      return;
+    }
+
+    // tampilkan data
+    panelData.innerHTML = `
+      <div class="flex justify-center mb-4">
+        <img src="${data.foto || 'default-profile.png'}" class="w-20 h-20 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
+      </div>
+      <p><span class='text-gray-500'>Nama:</span> ${data.nama}</p>
+      <p><span class='text-gray-500'>Email:</span> ${data.email}</p>
+      <p><span class='text-gray-500'>Telepon:</span> ${data.telepon}</p>
+      <p><span class='text-gray-500'>Alamat:</span> ${data.alamat}</p>
+      <p><span class='text-gray-500'>Wilayah:</span> ${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p>
+    `;
+  });
+</script>
+
+  <!-- ✅ FOOTER -->
+  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
+    <div class="text-center text-sm text-gray-300">&copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.</div>
+  </footer>
 
   <script>
     const produk = [
@@ -166,7 +207,6 @@
         `;
       });
 
-      // aktifkan popup di setiap tombol setelah render
       document.querySelectorAll(".lihat-detail").forEach(btn => {
         btn.addEventListener("click", () => {
           document.getElementById("popup-nama").textContent = btn.dataset.nama;
@@ -210,15 +250,17 @@
     filterKualitas.addEventListener("change", filterProduk);
     filterKategori.addEventListener("change", filterProduk);
 
-    // tombol tutup popup
+    // popup close
     document.getElementById("close-popup").onclick = () => document.getElementById("popup-detail").classList.add("hidden");
     document.getElementById("tutup-popup").onclick = () => document.getElementById("popup-detail").classList.add("hidden");
 
+    // tampilkan awal
     tampilkanProduk(produk);
-    // tombol logout
+
+    // logout
     document.getElementById("logout-btn").addEventListener("click", () => {
-    window.location.href = "landing_page.html";
-  });
+      window.location.href = "landing_page.html";
+    });
   </script>
 </body>
 </html>

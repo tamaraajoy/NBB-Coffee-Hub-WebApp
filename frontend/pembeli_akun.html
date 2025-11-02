@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akun Pembeli - NBB Coffee Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #FAF9F6; }
+    .font-title { font-family: 'Playfair Display', serif; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ✅ NAVBAR -->
+  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="pembeli_beranda.html" class="hover:text-[#B8860B] transition">Beranda</a>
+        <a href="pembeli_produk.html" class="hover:text-[#B8860B] transition">Produk</a>
+        <a href="pembeli_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
+        <a href="pembeli_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button id="open-profil" class="text-[#B8860B] font-semibold transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8 mt-28 mb-12 text-center">
+    <img id="fotoAkun" src="default-profile.png" class="w-32 h-32 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md mx-auto mb-4">
+    <h2 class="text-2xl font-title text-[#4B3832] mb-6">Profil Pembeli</h2>
+    <div id="infoPembeli" class="space-y-3"></div>
+    <div class="pt-6">
+      <a href="pembeli_editprofil.html" class="bg-[#B8860B] text-white px-6 py-2 rounded-lg hover:bg-[#654321] transition">Edit Profil</a>
+    </div>
+  </main>
+
+  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 text-center text-sm">
+    &copy; 2025 NBB Coffee Hub Pembeli. All Rights Reserved.
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const data = JSON.parse(localStorage.getItem("profilPembeli"));
+      const info = document.getElementById("infoPembeli");
+      const foto = document.getElementById("fotoAkun");
+
+      if (!data) {
+        info.innerHTML = `<p class="text-gray-500 italic">Belum ada data profil. Silakan <a href='pembeli_editprofil.html' class='text-[#B8860B] underline'>isi profil terlebih dahulu</a>.</p>`;
+        return;
+      }
+
+      foto.src = data.foto;
+      info.innerHTML = `
+        <p><span class='text-gray-500'>Nama:</span> ${data.nama}</p>
+        <p><span class='text-gray-500'>Email:</span> ${data.email}</p>
+        <p><span class='text-gray-500'>Telepon:</span> ${data.telepon}</p>
+        <p><span class='text-gray-500'>Alamat:</span> ${data.alamat}</p>
+        <p><span class='text-gray-500'>Wilayah:</span> ${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p>
+      `;
+    });
+  </script>
+</body>
+</html>

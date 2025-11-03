@@ -122,6 +122,10 @@
   <div class="p-6 border-t text-center">
     <a href="pembeli_editprofil.html" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">Edit Profil</a>
   </div>
+
+  <div class="text-center">
+    <a href="landing_page.html" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">Keluar</a>
+  </div>
 </div>
 
 <!-- ✅ SCRIPT PROFIL PANEL -->
@@ -135,17 +139,6 @@
     // buka & tutup panel
     openBtn?.addEventListener("click", () => panel.classList.remove("translate-x-full"));
     closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
-
-    // ambil data dari localStorage
-    const data = JSON.parse(localStorage.getItem("profilPembeli"));
-
-    if (!data) {
-      panelData.innerHTML = `
-        <p class='text-gray-500 italic'>Belum ada data profil.</p>
-        <p><a href='pembeli_editprofil.html' class='text-[#B8860B] underline'>Isi profil di sini</a></p>
-      `;
-      return;
-    }
 
     // tampilkan data
     panelData.innerHTML = `

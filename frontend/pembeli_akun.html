@@ -52,11 +52,6 @@
       const info = document.getElementById("infoPembeli");
       const foto = document.getElementById("fotoAkun");
 
-      if (!data) {
-        info.innerHTML = `<p class="text-gray-500 italic">Belum ada data profil. Silakan <a href='pembeli_editprofil.html' class='text-[#B8860B] underline'>isi profil terlebih dahulu</a>.</p>`;
-        return;
-      }
-
       foto.src = data.foto;
       info.innerHTML = `
         <p><span class='text-gray-500'>Nama:</span> ${data.nama}</p>

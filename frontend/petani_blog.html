@@ -20,7 +20,7 @@
       <nav class="hidden md:flex space-x-8 font-medium">
         <a href="petani_beranda.html" class="hover:text-[#B8860B] transition">Beranda</a>
         <a href="petani_produk.html" class="hover:text-[#B8860B] transition">Kelola Produk</a>
-        <a href="petani_blog.html" class="text-[#B8860B] font-semibold transition">Kelola Blog</a>
+        <a href="petani_blog.html" class="text-[#B8860B] font-semibold transition">Blog</a>
         <a href="petani_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
       </nav>
       <div class="flex items-center space-x-4">
@@ -90,34 +90,52 @@
     </div>
   </div>
 
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const panel = document.getElementById("profil-panel");
-    const openBtn = document.getElementById("open-profil");
-    const closeBtn = document.getElementById("close-profil");
-    const container = document.getElementById("profil-panel-data");
+  <!-- ✅ PROFIL PANEL -->
+<div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
+  <div class="flex justify-between items-center px-6 py-4 border-b">
+    <h3 class="text-lg font-semibold text-[#4B3832]">Profil Petani</h3>
+    <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
+  </div>
+  <div class="p-6 space-y-4 text-sm" id="profil-panel-data">
+    <p class="text-gray-500 italic">Memuat data...</p>
+  </div>
+</div>
 
-    openBtn?.addEventListener("click", () => {
-      const data = JSON.parse(localStorage.getItem("profilPetani"));
-      if (!data) {
-        container.innerHTML = `<p class="text-gray-500 italic">Data profil belum diisi.<br><a href='petani_akun.html' class='text-[#B8860B] underline'>Lihat Profil</a></p>`;
-      } else {
-        container.innerHTML = `
-          <div><p class="text-gray-500">Nama</p><p class="font-medium">${data.nama}</p></div>
-          <div><p class="text-gray-500">Email</p><p class="font-medium">${data.email}</p></div>
-          <div><p class="text-gray-500">Alamat</p><p class="font-medium">${data.alamat}</p></div>
-          <div class="mt-6 flex flex-col space-y-3">
-            <a href="petani_akun.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
-            <button id="logout-btn" class="border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Keluar</button>
-          </div>
-        `;
-      }
-      panel.classList.remove("translate-x-full");
-    });
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const panel = document.getElementById("profil-panel");
+  const openBtn = document.getElementById("open-profil");
+  const closeBtn = document.getElementById("close-profil");
+  const container = document.getElementById("profil-panel-data");
 
-    closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
+  openBtn?.addEventListener("click", () => {
+    const data = JSON.parse(localStorage.getItem("profilPetani"));
+    if (!data) {
+      container.innerHTML = `
+        <p class="text-gray-500 italic mb-4">Data profil belum diisi.</p>
+        <div class="flex flex-col space-y-3">
+          <a href="petani_editprofil.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
+          <a href="landing_page.html" class="block text-center border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition">Keluar</a>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div><p class="text-gray-500">Nama</p><p class="font-medium">${data.nama}</p></div>
+        <div><p class="text-gray-500">Email</p><p class="font-medium">${data.email}</p></div>
+        <div><p class="text-gray-500">Alamat</p><p class="font-medium">${data.alamat}</p></div>
+        <div class="mt-6 flex flex-col space-y-3">
+          <a href="petani_editprofil.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
+          <a href="landing_page.html" class="block text-center border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition">Keluar</a>
+        </div>
+      `;
+    }
+    panel.classList.remove("translate-x-full");
   });
-  </script>
+
+  closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
+});
+</script>
+
 
  <!-- ✅ FOOTER -->
   <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">

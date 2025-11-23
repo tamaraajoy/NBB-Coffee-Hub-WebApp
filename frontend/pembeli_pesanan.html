@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riwayat Pesanan Selesai - NBB Coffee Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .font-title { font-family: 'Playfair Display', serif; }
+    .font-body { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+<body class="font-body bg-gray-50 text-gray-800">
+
+  <!-- NAVBAR -->
+  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+      <nav class="hidden md:flex space-x-8 font-medium">
+        <a href="pembeli_beranda.html" class="hover:text-[#B8860B] transition">Beranda</a>
+        <a href="pembeli_produk.html" class="hover:text-[#B8860B] transition">Produk</a>
+        <a href="pembeli_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
+        <a href="pembeli_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+        <a href="pembeli_pesanan.html" class="text-[#B8860B] font-semibold">Pesanan Saya</a>
+      </nav>
+
+      <div class="flex items-center space-x-4">
+        <a href="pembeli_keranjang.html" class="hover:text-[#B8860B] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l1.4-7H6.4M15 13a2 2 0 11-4 0 2 2 0 014 0zM19 13a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </a>
+
+        <button id="open-profil" class="hover:text-[#B8860B] transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ISI HALAMAN -->
+  <main class="pt-28 container mx-auto px-6 pb-20">
+
+    <!-- GAMIFIKASI LEVEL -->
+    <div class="bg-white shadow-md rounded-xl p-6 mb-10">
+      <h2 class="text-xl font-semibold mb-3">Level Pembeli Kamu</h2>
+
+      <p class="text-gray-600 mb-2">Total Pembelian: <span id="totalPembelian" class="font-semibold text-[#4B3832]">Rp0</span></p>
+      <p class="text-gray-600 mb-2">Level Saat Ini: <span id="levelPembeli" class="font-semibold text-[#4B3832]">Bronze</span></p>
+
+      <!-- Progress Bar -->
+      <div class="w-full bg-gray-200 h-4 rounded-full">
+        <div id="progressBar" class="bg-[#B8860B] h-4 rounded-full transition-all" style="width: 20%"></div>
+      </div>
+
+      <p class="text-gray-500 text-sm mt-2">Naik level berikutnya setelah total pembelian mencapai batas tertentu.</p>
+    </div>
+
+    <h2 class="text-2xl font-semibold mb-6 text-center">Pesanan Selesai</h2>
+
+    <!-- LIST PESANAN SELESAI -->
+    <div id="pesananContainer" class="bg-white shadow-md rounded-xl p-6 space-y-6">
+      <!-- Pesanan selesai muncul di sini -->
+    </div>
+  </main>
+
+  <!-- SCRIPT GAMIFIKASI + PESANAN -->
+<script>
+/* ==========================
+   LOAD DATA LOCALSTORAGE
+========================== */
+let pesananSelesai = JSON.parse(localStorage.getItem("pesananSelesai")) || [];
+
+/* ===== TOTAL PEMBELIAN ===== */
+let totalPembelian = Number(localStorage.getItem("totalPembelian")) || 0;
+
+/* DOM */
+const totalPembelianEl = document.getElementById("totalPembelian");
+const levelPembeliEl = document.getElementById("levelPembeli");
+const progressBar = document.getElementById("progressBar");
+const container = document.getElementById("pesananContainer");
+
+/* FORMAT RUPIAH */
+function rupiah(n) {
+  return "Rp" + n.toLocaleString();
+}
+
+/* LEVEL */
+function hitungLevel(total) {
+  if (total >= 5000000) return "Platinum";
+  if (total >= 1000000) return "Gold";
+  if (total >= 500000) return "Silver";
+  return "Bronze";
+}
+
+/* PROGRESS BAR */
+function hitungProgress(total) {
+  if (total >= 5000000) return 100;
+  if (total >= 1000000) return (total / 5000000) * 100;
+  if (total >= 500000) return (total / 1000000) * 100;
+  return (total / 500000) * 100;
+}
+
+/* UPDATE UI LEVEL */
+totalPembelianEl.textContent = rupiah(totalPembelian);
+levelPembeliEl.textContent = hitungLevel(totalPembelian);
+progressBar.style.width = hitungProgress(totalPembelian) + "%";
+
+/* ==========================
+   TAMPILKAN PESANAN SELESAI
+========================== */
+function tampilkanPesanan() {
+  container.innerHTML = "";
+
+  if (pesananSelesai.length === 0) {
+    container.innerHTML = `<p class='text-gray-500 text-center'>Belum ada pesanan selesai.</p>`;
+    return;
+  }
+
+  pesananSelesai.forEach((pesanan) => {
+    let itemsHTML = "";
+
+    pesanan.items.forEach((it) => {
+      itemsHTML += `
+        <div class="flex items-center justify-between border-b pb-3">
+          <div class="flex items-center gap-3">
+            <img src="${it.img}" class="w-14 h-14 object-cover rounded-md">
+            <div>
+              <p class="font-medium text-[#4B3832]">${it.nama}</p>
+              <p class="text-sm text-gray-600">${it.jumlah} pcs</p>
+            </div>
+          </div>
+          <p class="font-semibold text-[#654321]">${rupiah(it.total)}</p>
+        </div>
+      `;
+    });
+
+    container.innerHTML += `
+      <div class="border p-4 rounded-lg shadow-sm bg-white">
+        <p class="font-semibold text-lg text-[#4B3832] mb-2">Pesanan #${pesanan.id}</p>
+        <p class="text-gray-500 text-sm mb-4">${pesanan.tanggal}</p>
+
+        ${itemsHTML}
+
+        <div class="mt-4 pt-3 border-t">
+          <p class="flex justify-between">
+            <span class="text-gray-600">Subtotal:</span>
+            <span class="font-medium">${rupiah(pesanan.subtotal)}</span>
+          </p>
+          <p class="flex justify-between">
+            <span class="text-gray-600">Ongkir:</span>
+            <span class="font-medium">${rupiah(pesanan.ongkir)}</span>
+          </p>
+          <p class="flex justify-between font-semibold text-[#4B3832] text-lg mt-2">
+            <span>Total:</span>
+            <span>${rupiah(pesanan.total)}</span>
+          </p>
+        </div>
+      </div>
+    `;
+  });
+}
+
+tampilkanPesanan();
+</script>
+
+</body>
+</html>

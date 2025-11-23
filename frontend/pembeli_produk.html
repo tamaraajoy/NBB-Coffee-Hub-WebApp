@@ -102,8 +102,38 @@
       <p id="popup-penjual" class="text-sm text-gray-600 mb-3"></p>
       <p id="popup-deskripsi" class="text-sm text-gray-700 leading-relaxed mb-5"></p>
       <div class="flex gap-3">
-        <button class="flex-1 bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508]">Beli Sekarang</button>
+        <!-- Button Beli sekarang di popup detail membuka popup beli qty -->
+        <button id="detail-beli-btn" class="flex-1 bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508]">Beli Sekarang</button>
         <button id="tutup-popup" class="flex-1 border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP BELI (OPSI A - MINIMALIS) -->
+  <div id="popup-beli" class="fixed inset-0 bg-black/60 flex items-center justify-center hidden z-[1000]">
+    <div class="bg-white rounded-lg shadow-xl w-96 max-w-full p-6 relative">
+      <button id="close-popup-beli" class="absolute top-2 right-3 text-gray-500 text-2xl hover:text-red-600">&times;</button>
+
+      <h3 id="beli-nama" class="text-xl font-semibold text-[#4B3832] mb-2"></h3>
+      <p id="beli-harga-satuan" class="text-[#B8860B] font-medium mb-3"></p>
+
+      <!-- Qty control -->
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-gray-600">Jumlah:</span>
+        <div class="flex items-center gap-3">
+          <button id="minus-btn" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">-</button>
+          <span id="jumlah" class="w-8 text-center font-semibold">1</span>
+          <button id="plus-btn" class="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300">+</button>
+        </div>
+      </div>
+
+      <p class="text-[#4B3832] font-semibold mb-6">
+        Total: <span id="beli-total" class="text-[#B8860B]">Rp 0</span>
+      </p>
+
+      <div class="flex gap-3">
+        <button id="confirm-beli" class="flex-1 bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508]">Tambahkan ke Keranjang</button>
+        <button id="cancel-beli" class="flex-1 border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Batal</button>
       </div>
     </div>
   </div>
@@ -128,132 +158,227 @@
   </div>
 </div>
 
-<!-- ✅ SCRIPT PROFIL PANEL -->
+<!-- ✅ FOOTER -->
+<footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
+  <div class="text-center text-sm text-gray-300">&copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.</div>
+</footer>
+
 <script>
+  // produk (sama seperti yang kamu kirim)
+  const produk = [
+    { nama: "Kopi Gayo Arabika", harga: 120000, kualitas: "Premium", kategori: "Arabika", penjual: "Kopi Nusantara Store", deskripsi: "Kopi Arabika dari dataran tinggi Gayo dengan aroma floral dan rasa seimbang.", img: "https://via.placeholder.com/400x300.png?text=Gayo+Arabika" },
+    { nama: "Kopi Toraja Robusta", harga: 95000, kualitas: "Standar", kategori: "Robusta", penjual: "Toraja Beans", deskripsi: "Kopi Robusta kuat dengan karakter rasa pekat khas Toraja.", img: "https://via.placeholder.com/400x300.png?text=Toraja+Robusta" },
+    { nama: "Kopi Flores Bajawa", harga: 150000, kualitas: "Premium", kategori: "Arabika", penjual: "Flores Coffee Farm", deskripsi: "Kopi premium dengan keasaman lembut dan aroma kacang yang khas.", img: "https://via.placeholder.com/400x300.png?text=Flores+Bajawa" },
+    { nama: "Kopi Lampung", harga: 85000, kualitas: "Ekonomis", kategori: "Robusta", penjual: "Lampung Beans", deskripsi: "Kopi Robusta ekonomis dengan aroma khas dan rasa yang kuat.", img: "https://via.placeholder.com/400x300.png?text=Kopi+Lampung" },
+    { nama: "Kopi Bali Kintamani", harga: 140000, kualitas: "Premium", kategori: "Blend", penjual: "Bali Coffee Co", deskripsi: "Perpaduan unik kopi Bali dengan sentuhan citrus dan aroma segar.", img: "https://via.placeholder.com/400x300.png?text=Bali+Kintamani" },
+    { nama: "Kopi Papua Wamena", harga: 180000, kualitas: "Premium", kategori: "Arabika", penjual: "Papua Mountain Coffee", deskripsi: "Kopi Arabika dari Papua dengan cita rasa lembut dan aroma herbal yang khas.", img: "https://via.placeholder.com/400x300.png?text=Papua+Wamena" },
+  ];
+
+  // elemen
+  const produkContainer = document.getElementById("produkContainer");
+  const searchInput = document.getElementById("searchInput");
+  const filterHarga = document.getElementById("filterHarga");
+  const filterKualitas = document.getElementById("filterKualitas");
+  const filterKategori = document.getElementById("filterKategori");
+
+  // state untuk popup beli
+  let currentName = "";
+  let currentPrice = 0;
+  let currentQty = 1;
+
+  function rupiah(n) {
+    return "Rp " + n.toLocaleString();
+  }
+
+  function tampilkanProduk(data) {
+    produkContainer.innerHTML = "";
+    data.forEach(p => {
+      produkContainer.innerHTML += `
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img src="${p.img}" alt="${p.nama}" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <h4 class="font-semibold text-[#4B3832] mb-1">${p.nama}</h4>
+            <p class="text-sm text-[#654321] mb-2">Rp ${p.harga.toLocaleString()} / kg</p>
+            <p class="text-xs text-gray-500 mb-4">${p.kategori} • ${p.kualitas}</p>
+            <div class="flex gap-2">
+              <button class="btn-beli flex-1 bg-[#B8860B] text-[#EFEBE9] px-4 py-2 rounded-lg hover:bg-[#654321] transition"
+                data-nama="${p.nama}"
+                data-harga="${p.harga}"
+                data-penjual="${p.penjual}"
+                data-deskripsi="${p.deskripsi}"
+                data-img="${p.img}">
+                Beli Sekarang
+              </button>
+              <button class="lihat-detail flex-1 border border-[#B8860B] text-[#B8860B] px-4 py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition"
+                data-nama="${p.nama}"
+                data-harga="Rp ${p.harga.toLocaleString()} / kg"
+                data-penjual="${p.penjual}"
+                data-deskripsi="${p.deskripsi}">
+                Lihat Detail
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    // event listener after render
+    document.querySelectorAll(".lihat-detail").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.getElementById("popup-nama").textContent = btn.dataset.nama;
+        document.getElementById("popup-harga").textContent = btn.dataset.harga;
+        document.getElementById("popup-penjual").textContent = "Dijual oleh: " + btn.dataset.penjual;
+        document.getElementById("popup-deskripsi").textContent = btn.dataset.deskripsi;
+        document.getElementById("popup-detail").classList.remove("hidden");
+      });
+    });
+
+    document.querySelectorAll(".btn-beli").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const nama = btn.dataset.nama;
+        const harga = parseInt(btn.dataset.harga, 10);
+        const img = btn.dataset.img;
+        const penjual = btn.dataset.penjual;
+        const deskripsi = btn.dataset.deskripsi;
+
+        // set untuk popup beli
+        currentName = nama;
+        currentPrice = harga;
+        currentQty = 1;
+
+        document.getElementById("beli-nama").textContent = nama;
+        document.getElementById("beli-harga-satuan").textContent = rupiah(harga) + " / kg";
+        document.getElementById("jumlah").textContent = currentQty;
+        document.getElementById("beli-total").textContent = rupiah(harga * currentQty);
+
+        // buka popup beli
+        document.getElementById("popup-beli").classList.remove("hidden");
+      });
+    });
+  }
+
+  function filterProduk() {
+    const cari = (searchInput.value || "").toLowerCase();
+    const harga = filterHarga.value;
+    const kualitas = filterKualitas.value;
+    const kategori = filterKategori.value;
+
+    const hasil = produk.filter(p => {
+      let cocok = p.nama.toLowerCase().includes(cari);
+      if (harga === "<100000") cocok = cocok && p.harga < 100000;
+      if (harga === "100000-150000") cocok = cocok && p.harga >= 100000 && p.harga <= 150000;
+      if (harga === ">150000") cocok = cocok && p.harga > 150000;
+      if (kualitas) cocok = cocok && p.kualitas === kualitas;
+      if (kategori) cocok = cocok && p.kategori === kategori;
+      return cocok;
+    });
+
+    tampilkanProduk(hasil);
+  }
+
+  function resetFilter() {
+    searchInput.value = "";
+    filterHarga.value = "";
+    filterKualitas.value = "";
+    filterKategori.value = "";
+    tampilkanProduk(produk);
+  }
+
+  // popup detail close
+  document.getElementById("close-popup").onclick = () => document.getElementById("popup-detail").classList.add("hidden");
+  document.getElementById("tutup-popup").onclick = () => document.getElementById("popup-detail").classList.add("hidden");
+
+  // popup beli controls
+  document.getElementById("plus-btn").addEventListener("click", () => {
+    currentQty++;
+    document.getElementById("jumlah").textContent = currentQty;
+    document.getElementById("beli-total").textContent = rupiah(currentQty * currentPrice);
+  });
+  document.getElementById("minus-btn").addEventListener("click", () => {
+    if (currentQty > 1) currentQty--;
+    document.getElementById("jumlah").textContent = currentQty;
+    document.getElementById("beli-total").textContent = rupiah(currentQty * currentPrice);
+  });
+
+  // cancel / close beli
+  document.getElementById("cancel-beli").addEventListener("click", () => {
+    document.getElementById("popup-beli").classList.add("hidden");
+  });
+  document.getElementById("close-popup-beli").addEventListener("click", () => {
+    document.getElementById("popup-beli").classList.add("hidden");
+  });
+
+  // confirm -> simpan ke localStorage 'keranjang' (merge qty jika sama)
+  document.getElementById("confirm-beli").addEventListener("click", () => {
+    let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+
+    const existingIndex = keranjang.findIndex(item => item.nama === currentName);
+    if (existingIndex !== -1) {
+      keranjang[existingIndex].jumlah += currentQty;
+      keranjang[existingIndex].total = keranjang[existingIndex].harga * keranjang[existingIndex].jumlah;
+    } else {
+      keranjang.push({
+        nama: currentName,
+        harga: currentPrice,
+        jumlah: currentQty,
+        total: currentPrice * currentQty
+      });
+    }
+
+    localStorage.setItem("keranjang", JSON.stringify(keranjang));
+
+    // close popup and optionally redirect to keranjang
+    document.getElementById("popup-beli").classList.add("hidden");
+
+    // redirect ke halaman keranjang
+    window.location.href = "pembeli_keranjang.html";
+  });
+
+  // profil panel (guard jika data undefined)
   document.addEventListener("DOMContentLoaded", () => {
     const panel = document.getElementById("profil-panel");
     const openBtn = document.getElementById("open-profil");
     const closeBtn = document.getElementById("close-profil");
     const panelData = document.getElementById("profil-panel-data");
 
-    // buka & tutup panel
     openBtn?.addEventListener("click", () => panel.classList.remove("translate-x-full"));
     closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
 
-    // tampilkan data
-    panelData.innerHTML = `
-      <div class="flex justify-center mb-4">
-        <img src="${data.foto || 'default-profile.png'}" class="w-20 h-20 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
-      </div>
-      <p><span class='text-gray-500'>Nama:</span> ${data.nama}</p>
-      <p><span class='text-gray-500'>Email:</span> ${data.email}</p>
-      <p><span class='text-gray-500'>Telepon:</span> ${data.telepon}</p>
-      <p><span class='text-gray-500'>Alamat:</span> ${data.alamat}</p>
-      <p><span class='text-gray-500'>Wilayah:</span> ${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p>
-    `;
-  });
-</script>
-
-  <!-- ✅ FOOTER -->
-  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
-    <div class="text-center text-sm text-gray-300">&copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.</div>
-  </footer>
-
-  <script>
-    const produk = [
-      { nama: "Kopi Gayo Arabika", harga: 120000, kualitas: "Premium", kategori: "Arabika", penjual: "Kopi Nusantara Store", deskripsi: "Kopi Arabika dari dataran tinggi Gayo dengan aroma floral dan rasa seimbang.", img: "https://via.placeholder.com/400x300.png?text=Gayo+Arabika" },
-      { nama: "Kopi Toraja Robusta", harga: 95000, kualitas: "Standar", kategori: "Robusta", penjual: "Toraja Beans", deskripsi: "Kopi Robusta kuat dengan karakter rasa pekat khas Toraja.", img: "https://via.placeholder.com/400x300.png?text=Toraja+Robusta" },
-      { nama: "Kopi Flores Bajawa", harga: 150000, kualitas: "Premium", kategori: "Arabika", penjual: "Flores Coffee Farm", deskripsi: "Kopi premium dengan keasaman lembut dan aroma kacang yang khas.", img: "https://via.placeholder.com/400x300.png?text=Flores+Bajawa" },
-      { nama: "Kopi Lampung", harga: 85000, kualitas: "Ekonomis", kategori: "Robusta", penjual: "Lampung Beans", deskripsi: "Kopi Robusta ekonomis dengan aroma khas dan rasa yang kuat.", img: "https://via.placeholder.com/400x300.png?text=Kopi+Lampung" },
-      { nama: "Kopi Bali Kintamani", harga: 140000, kualitas: "Premium", kategori: "Blend", penjual: "Bali Coffee Co", deskripsi: "Perpaduan unik kopi Bali dengan sentuhan citrus dan aroma segar.", img: "https://via.placeholder.com/400x300.png?text=Bali+Kintamani" },
-      { nama: "Kopi Papua Wamena", harga: 180000, kualitas: "Premium", kategori: "Arabika", penjual: "Papua Mountain Coffee", deskripsi: "Kopi Arabika dari Papua dengan cita rasa lembut dan aroma herbal yang khas.", img: "https://via.placeholder.com/400x300.png?text=Papua+Wamena" },
-    ];
-
-    const produkContainer = document.getElementById("produkContainer");
-    const searchInput = document.getElementById("searchInput");
-    const filterHarga = document.getElementById("filterHarga");
-    const filterKualitas = document.getElementById("filterKualitas");
-    const filterKategori = document.getElementById("filterKategori");
-
-    function tampilkanProduk(data) {
-      produkContainer.innerHTML = "";
-      data.forEach(p => {
-        produkContainer.innerHTML += `
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img src="${p.img}" alt="${p.nama}" class="w-full h-48 object-cover">
-            <div class="p-4">
-              <h4 class="font-semibold text-[#4B3832] mb-1">${p.nama}</h4>
-              <p class="text-sm text-[#654321] mb-2">Rp ${p.harga.toLocaleString()} / kg</p>
-              <p class="text-xs text-gray-500 mb-4">${p.kategori} • ${p.kualitas}</p>
-              <div class="flex gap-2">
-                <button class="flex-1 bg-[#B8860B] text-[#EFEBE9] px-4 py-2 rounded-lg hover:bg-[#654321] transition">Beli Sekarang</button>
-                <button class="lihat-detail flex-1 border border-[#B8860B] text-[#B8860B] px-4 py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition"
-                  data-nama="${p.nama}"
-                  data-harga="Rp ${p.harga.toLocaleString()} / kg"
-                  data-penjual="${p.penjual}"
-                  data-deskripsi="${p.deskripsi}">
-                  Lihat Detail
-                </button>
-              </div>
-            </div>
+    // tampilkan data jika tersedia (jaga agar tidak error)
+    try {
+      if (typeof data !== "undefined" && data) {
+        panelData.innerHTML = `
+          <div class="flex justify-center mb-4">
+            <img src="${data.foto || 'default-profile.png'}" class="w-20 h-20 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
           </div>
+          <p><span class='text-gray-500'>Nama:</span> ${data.nama}</p>
+          <p><span class='text-gray-500'>Email:</span> ${data.email}</p>
+          <p><span class='text-gray-500'>Telepon:</span> ${data.telepon}</p>
+          <p><span class='text-gray-500'>Alamat:</span> ${data.alamat}</p>
+          <p><span class='text-gray-500'>Wilayah:</span> ${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p>
         `;
-      });
-
-      document.querySelectorAll(".lihat-detail").forEach(btn => {
-        btn.addEventListener("click", () => {
-          document.getElementById("popup-nama").textContent = btn.dataset.nama;
-          document.getElementById("popup-harga").textContent = btn.dataset.harga;
-          document.getElementById("popup-penjual").textContent = "Dijual oleh: " + btn.dataset.penjual;
-          document.getElementById("popup-deskripsi").textContent = btn.dataset.deskripsi;
-          document.getElementById("popup-detail").classList.remove("hidden");
-        });
-      });
+      } else {
+        panelData.innerHTML = `<p class="text-gray-500 italic">Belum ada data profil.</p>`;
+      }
+    } catch (e) {
+      panelData.innerHTML = `<p class="text-gray-500 italic">Belum ada data profil.</p>`;
     }
+  });
 
-    function filterProduk() {
-      const cari = searchInput.value.toLowerCase();
-      const harga = filterHarga.value;
-      const kualitas = filterKualitas.value;
-      const kategori = filterKategori.value;
+  // filter listeners
+  searchInput.addEventListener("input", filterProduk);
+  filterHarga.addEventListener("change", filterProduk);
+  filterKualitas.addEventListener("change", filterProduk);
+  filterKategori.addEventListener("change", filterProduk);
 
-      const hasil = produk.filter(p => {
-        let cocok = p.nama.toLowerCase().includes(cari);
-        if (harga === "<100000") cocok = cocok && p.harga < 100000;
-        if (harga === "100000-150000") cocok = cocok && p.harga >= 100000 && p.harga <= 150000;
-        if (harga === ">150000") cocok = cocok && p.harga > 150000;
-        if (kualitas) cocok = cocok && p.kualitas === kualitas;
-        if (kategori) cocok = cocok && p.kategori === kategori;
-        return cocok;
-      });
+  // tampilkan awal
+  tampilkanProduk(produk);
 
-      tampilkanProduk(hasil);
-    }
-
-    function resetFilter() {
-      searchInput.value = "";
-      filterHarga.value = "";
-      filterKualitas.value = "";
-      filterKategori.value = "";
-      tampilkanProduk(produk);
-    }
-
-    searchInput.addEventListener("input", filterProduk);
-    filterHarga.addEventListener("change", filterProduk);
-    filterKualitas.addEventListener("change", filterProduk);
-    filterKategori.addEventListener("change", filterProduk);
-
-    // popup close
-    document.getElementById("close-popup").onclick = () => document.getElementById("popup-detail").classList.add("hidden");
-    document.getElementById("tutup-popup").onclick = () => document.getElementById("popup-detail").classList.add("hidden");
-
-    // tampilkan awal
-    tampilkanProduk(produk);
-
-    // logout
-    document.getElementById("logout-btn").addEventListener("click", () => {
-      window.location.href = "landing_page.html";
-    });
-  </script>
+  // safe logout element guard (in case not present)
+  const logoutBtn = document.getElementById("logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => window.location.href = "landing_page.html");
+  }
+</script>
 </body>
 </html>

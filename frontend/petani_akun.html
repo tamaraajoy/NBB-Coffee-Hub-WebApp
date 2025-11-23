@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akun Pembeli - NBB Coffee Hub</title>
+  <title>Akun Petani - NBB Coffee Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -18,10 +18,10 @@
     <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
       <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
       <nav class="hidden md:flex space-x-8 font-medium">
-        <a href="pembeli_beranda.html" class="hover:text-[#B8860B] transition">Beranda</a>
-        <a href="pembeli_produk.html" class="hover:text-[#B8860B] transition">Produk</a>
-        <a href="pembeli_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
-        <a href="pembeli_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+        <a href="petani_beranda.html" class="hover:text-[#B8860B] transition">Beranda</a>
+        <a href="petani_produk.html" class="hover:text-[#B8860B] transition">Produk</a>
+        <a href="petani_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
+        <a href="petani_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
       </nav>
       <div class="flex items-center space-x-4">
         <button id="open-profil" class="text-[#B8860B] font-semibold transition">
@@ -36,7 +36,7 @@
   <!-- ✅ PROFIL PANEL (Sidebar) -->
   <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
     <div class="flex justify-between items-center px-6 py-4 border-b">
-      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Pembeli</h3>
+      <h3 class="text-lg font-semibold text-[#4B3832]">Profil Petani</h3>
       <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
     </div>
     <div class="p-6 space-y-4 text-sm" id="profil-panel-data">
@@ -47,17 +47,17 @@
   <!-- ✅ MAIN CONTENT -->
   <main class="flex-grow max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8 mt-28 mb-12">
     <div class="flex flex-col items-center mb-8">
-      <img id="fotoAkun" src="default-profile.png" alt="Foto Profil Pembeli" class="w-32 h-32 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
-      <h2 class="text-2xl font-title mt-3 text-[#4B3832]">Profil Pembeli</h2>
+      <img id="fotoAkun" src="default-profile.png" alt="Foto Profil Petani" class="w-32 h-32 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
+      <h2 class="text-2xl font-title mt-3 text-[#4B3832]">Profil Petani</h2>
     </div>
 
-    <div id="infoPembeli" class="space-y-4 text-center"></div>
+    <div id="infoPetani" class="space-y-4 text-center"></div>
   </main>
 
   <!-- ✅ FOOTER -->
   <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
     <div class="text-center text-sm text-gray-300">
-      &copy; 2025 NBB Coffee Hub Pembeli. All Rights Reserved.
+      &copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.
     </div>
   </footer>
 
@@ -65,13 +65,13 @@
   <script>
     // ✅ Tampilkan data profil utama
     document.addEventListener("DOMContentLoaded", () => {
-      const data = JSON.parse(localStorage.getItem("profilPembeli"));
-      const container = document.getElementById("infoPembeli");
+      const data = JSON.parse(localStorage.getItem("profilPetani"));
+      const container = document.getElementById("infoPetani");
       const fotoAkun = document.getElementById("fotoAkun");
 
       if (!data) {
         container.innerHTML = `<p class="text-gray-500 italic">
-          Belum ada data profil. Silakan <a href='pembeli_editprofil.html' class='text-[#B8860B] underline'>isi profil terlebih dahulu</a>.
+          Belum ada data profil. Silakan <a href='petani_editprofil.html' class='text-[#B8860B] underline'>isi profil terlebih dahulu</a>.
         </p>`;
         return;
       }
@@ -83,8 +83,12 @@
         <div><p class="text-gray-500 text-sm">Nomor Telepon</p><p class="text-gray-800 font-medium">${data.telepon}</p></div>
         <div><p class="text-gray-500 text-sm">Alamat</p><p class="text-gray-800 font-medium">${data.alamat}</p></div>
         <div><p class="text-gray-500 text-sm">Wilayah</p><p class="text-gray-800 font-medium">${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p></div>
+        <div><p class="text-gray-500 text-sm">Alamat</p><p class="text-gray-800 font-medium">${data.kota}</p></div>
+        <div><p class="text-gray-500 text-sm">Alamat</p><p class="text-gray-800 font-medium">${data.luas}</p></div>
+        <div><p class="text-gray-500 text-sm">Alamat</p><p class="text-gray-800 font-medium">${data.jenis}</p></div>
+        <div><p class="text-gray-500 text-sm">Alamat</p><p class="text-gray-800 font-medium">${data.deskripsi}</p></div>
         <div class="pt-6">
-          <a href="pembeli_editprofil.html" class="inline-block bg-[#B8860B] text-white px-6 py-2 rounded-lg hover:bg-[#654321] transition">
+          <a href="petani_editprofil.html" class="inline-block bg-[#B8860B] text-white px-6 py-2 rounded-lg hover:bg-[#654321] transition">
             Edit Profil
           </a>
         </div>
@@ -99,10 +103,10 @@
       const container = document.getElementById("profil-panel-data");
 
       openBtn?.addEventListener("click", () => {
-        const data = JSON.parse(localStorage.getItem("profilPembeli"));
+        const data = JSON.parse(localStorage.getItem("profilPetani"));
         if (!data) {
           container.innerHTML = `<p class="text-gray-500 italic">
-            Data profil belum diisi.<br><a href='pembeli_akun.html' class='text-[#B8860B] underline'>Lihat Profil</a>
+            Data profil belum diisi.<br><a href='petani_akun.html' class='text-[#B8860B] underline'>Lihat Profil</a>
           </p>`;
         } else {
           container.innerHTML = `
@@ -110,7 +114,7 @@
             <div><p class="text-gray-500">Email</p><p class="font-medium">${data.email}</p></div>
             <div><p class="text-gray-500">Alamat</p><p class="font-medium">${data.alamat}</p></div>
             <div class="mt-6 flex flex-col space-y-3">
-              <a href="pembeli_akun.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
+              <a href="petani_akun.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
               <button id="logout-btn" class="border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white">Keluar</button>
             </div>
           `;

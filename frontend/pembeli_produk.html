@@ -152,10 +152,6 @@
   <div class="p-6 border-t text-center">
     <a href="pembeli_editprofil.html" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">Edit Profil</a>
   </div>
-
-  <div class="text-center">
-    <a href="landing_page.html" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">Keluar</a>
-  </div>
 </div>
 
 <!-- ✅ FOOTER -->
@@ -334,35 +330,39 @@
     window.location.href = "pembeli_keranjang.html";
   });
 
-  // profil panel (guard jika data undefined)
+  //side profil  
   document.addEventListener("DOMContentLoaded", () => {
     const panel = document.getElementById("profil-panel");
     const openBtn = document.getElementById("open-profil");
     const closeBtn = document.getElementById("close-profil");
     const panelData = document.getElementById("profil-panel-data");
 
+    // buka & tutup panel
     openBtn?.addEventListener("click", () => panel.classList.remove("translate-x-full"));
     closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
 
-    // tampilkan data jika tersedia (jaga agar tidak error)
-    try {
-      if (typeof data !== "undefined" && data) {
-        panelData.innerHTML = `
-          <div class="flex justify-center mb-4">
-            <img src="${data.foto || 'default-profile.png'}" class="w-20 h-20 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
-          </div>
-          <p><span class='text-gray-500'>Nama:</span> ${data.nama}</p>
-          <p><span class='text-gray-500'>Email:</span> ${data.email}</p>
-          <p><span class='text-gray-500'>Telepon:</span> ${data.telepon}</p>
-          <p><span class='text-gray-500'>Alamat:</span> ${data.alamat}</p>
-          <p><span class='text-gray-500'>Wilayah:</span> ${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p>
-        `;
-      } else {
-        panelData.innerHTML = `<p class="text-gray-500 italic">Belum ada data profil.</p>`;
-      }
-    } catch (e) {
-      panelData.innerHTML = `<p class="text-gray-500 italic">Belum ada data profil.</p>`;
+    // ambil data dari localStorage
+    const data = JSON.parse(localStorage.getItem("profilPembeli"));
+
+    if (!data) {
+      panelData.innerHTML = `
+        <p class='text-gray-500 italic'>Belum ada data profil.</p>
+        <p><a href='pembeli_editprofil.html' class='text-[#B8860B] underline'>Isi profil di sini</a></p>
+      `;
+      return;
     }
+
+    // tampilkan data
+    panelData.innerHTML = `
+      <div class="flex justify-center mb-4">
+        <img src="${data.foto || 'default-profile.png'}" class="w-20 h-20 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
+      </div>
+      <p><span class='text-gray-500'>Nama:</span> ${data.nama}</p>
+      <p><span class='text-gray-500'>Email:</span> ${data.email}</p>
+      <p><span class='text-gray-500'>Telepon:</span> ${data.telepon}</p>
+      <p><span class='text-gray-500'>Alamat:</span> ${data.alamat}</p>
+      <p><span class='text-gray-500'>Wilayah:</span> ${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p>
+    `;
   });
 
   // filter listeners

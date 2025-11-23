@@ -99,7 +99,8 @@
       </article>
     </div>
   </main> 
-  <!-- ✅ PROFIL PANEL PEMBELI -->
+
+ <!-- ✅ PROFIL PANEL PEMBELI -->
 <div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
   <div class="flex justify-between items-center px-6 py-4 border-b bg-[#4B3832]/90 text-[#EFEBE9]">
     <h3 class="text-lg font-semibold">Profil Pembeli</h3>
@@ -112,10 +113,6 @@
 
   <div class="p-6 border-t text-center">
     <a href="pembeli_editprofil.html" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">Edit Profil</a>
-  </div>
-
-  <div class="text-center">
-    <a href="landing_page.html" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">Keluar</a>
   </div>
 </div>
 
@@ -131,6 +128,17 @@
     openBtn?.addEventListener("click", () => panel.classList.remove("translate-x-full"));
     closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
 
+    // ambil data dari localStorage
+    const data = JSON.parse(localStorage.getItem("profilPembeli"));
+
+    if (!data) {
+      panelData.innerHTML = `
+        <p class='text-gray-500 italic'>Belum ada data profil.</p>
+        <p><a href='pembeli_editprofil.html' class='text-[#B8860B] underline'>Isi profil di sini</a></p>
+      `;
+      return;
+    }
+
     // tampilkan data
     panelData.innerHTML = `
       <div class="flex justify-center mb-4">
@@ -143,30 +151,13 @@
       <p><span class='text-gray-500'>Wilayah:</span> ${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p>
     `;
   });
+
 </script>
 
    <!-- ✅ FOOTER -->
   <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
     <div class="text-center text-sm text-gray-300">&copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.</div>
   </footer>
-
-  <!-- ✅ Script -->
-  <script>
-    const openProfil = document.getElementById("open-profil");
-    const closeProfil = document.getElementById("close-profil");
-    const profilPanel = document.getElementById("profil-panel");
-
-    openProfil.addEventListener("click", () => {
-      profilPanel.classList.remove("translate-x-full");
-    });
-
-    closeProfil.addEventListener("click", () => {
-      profilPanel.classList.add("translate-x-full");
-    });
-    document.getElementById("logout-btn").addEventListener("click", () => {
-    window.location.href = "landing_page.html";
-  });
-  </script>
 
 </body>
 </html>

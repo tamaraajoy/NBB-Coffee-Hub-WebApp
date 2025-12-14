@@ -4,261 +4,259 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Petani - Kelola Produk | NBB Coffee Hub</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
     .font-title { font-family: 'Playfair Display', serif; }
     .font-body { font-family: 'Poppins', sans-serif; }
   </style>
 </head>
+
 <body class="bg-gray-50 font-body">
 
-  <!-- ✅ NAVBAR -->
-  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
-      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
-      <nav class="hidden md:flex space-x-8 font-medium">
-        <a href="petani_beranda.html" class="hover:text-[#B8860B] transition">Beranda</a>
-        <a href="petani_produk.html" class="text-[#B8860B] font-semibold transition">Kelola Produk</a>
-        <a href="petani_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
-        <a href="petani_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
-      </nav>
-      <div class="flex items-center space-x-4">
-        <button id="open-profil" class="hover:text-[#B8860B] transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
+<!-- ================= NAVBAR ================= -->
+<header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
+    <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
 
-  <!-- ✅ PROFIL PANEL -->
-<div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
+    <nav class="hidden md:flex space-x-8 font-medium">
+      <a href="petani_beranda.html" class="hover:text-[#B8860B] transition">Beranda</a>
+      <a href="petani_produk.html" class="text-[#B8860B] font-semibold transition">Kelola Produk</a>
+      <a href="petani_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
+      <a href="petani_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+    </nav>
+
+    <!-- ICON PROFIL (BENAR DI KANAN) -->
+    <div class="flex items-center space-x-4">
+      <button id="open-profil" class="hover:text-[#B8860B] transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804
+               M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= PANEL PROFIL ================= -->
+<div id="profil-panel"
+  class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100]
+         transform translate-x-full transition-all duration-300 ease-in-out">
+
   <div class="flex justify-between items-center px-6 py-4 border-b">
     <h3 class="text-lg font-semibold text-[#4B3832]">Profil Petani</h3>
-    <button id="close-profil" class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
+    <button id="close-profil"
+      class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
   </div>
-  <div class="p-6 space-y-4 text-sm" id="profil-panel-data">
+
+  <div id="profil-panel-data" class="p-6 space-y-4 text-sm">
     <p class="text-gray-500 italic">Memuat data...</p>
   </div>
 </div>
 
+<!-- ================= MAIN ================= -->
+<main class="container mx-auto py-10 px-6 pt-28">
+
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-2xl font-title text-[#4B3832]">Produk Saya</h2>
+    <button onclick="openModal()"
+      class="bg-[#B8860B] text-white px-5 py-2 rounded-md shadow hover:bg-yellow-700">
+      + Tambah Produk
+    </button>
+  </div>
+
+  <div id="produkGrid"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</main>
+
+<!-- ================= MODAL PRODUK ================= -->
+<div id="produkModal"
+  class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-auto">
+  <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg my-10">
+    <h3 id="modalTitle" class="text-xl font-semibold mb-4">Tambah Produk</h3>
+
+    <form id="produkForm" class="space-y-4">
+      <input type="hidden" id="editIndex">
+
+      <input id="namaProduk" type="text" placeholder="Nama Produk"
+        class="w-full border rounded-md px-3 py-2" required>
+
+      <input id="hargaProduk" type="number" placeholder="Harga (Rp/kg)"
+        class="w-full border rounded-md px-3 py-2" required>
+
+      <input id="stokProduk" type="number" placeholder="Stok (kg)"
+        class="w-full border rounded-md px-3 py-2" required>
+
+      <textarea id="deskripsiProduk" rows="3"
+        class="w-full border rounded-md px-3 py-2"
+        placeholder="Deskripsi"></textarea>
+
+      <select id="kategoriProduk" class="w-full border rounded-md px-3 py-2">
+        <option>Arabika</option>
+        <option>Robusta</option>
+        <option>Liberica</option>
+        <option>Excelsa</option>
+      </select>
+
+      <select id="klasifikasiProduk" class="w-full border rounded-md px-3 py-2">
+        <option>Premium</option>
+        <option>Standar</option>
+        <option>Ekonomis</option>
+      </select>
+
+      <input id="gambarProduk" type="file" accept="image/*"
+        class="w-full border rounded-md px-3 py-2"
+        onchange="previewGambar(event)">
+
+      <img id="previewImage"
+        class="w-32 h-32 object-cover rounded-md hidden">
+
+      <div class="flex justify-end space-x-3">
+        <button type="button" onclick="closeModal()"
+          class="px-4 py-2 bg-gray-300 rounded-md">Batal</button>
+        <button type="submit"
+          class="px-4 py-2 bg-[#B8860B] text-white rounded-md">Simpan</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
+  <div class="text-center text-sm text-gray-300">
+    &copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.
+  </div>
+</footer>
+
+<!-- ================= SCRIPT ================= -->
 <script>
+/* ===== PROFIL PANEL (SAMA DENGAN BLOG) ===== */
 document.addEventListener("DOMContentLoaded", () => {
   const panel = document.getElementById("profil-panel");
   const openBtn = document.getElementById("open-profil");
   const closeBtn = document.getElementById("close-profil");
-  const container = document.getElementById("profil-panel-data");
+  const panelData = document.getElementById("profil-panel-data");
 
-  openBtn?.addEventListener("click", () => {
-    const data = JSON.parse(localStorage.getItem("profilPetani"));
-    if (!data) {
-      container.innerHTML = `
-        <p class="text-gray-500 italic mb-4">Data profil belum diisi.</p>
-        <div class="flex flex-col space-y-3">
-          <a href="petani_editprofil.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
-          <a href="landing_page.html" class="block text-center border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition">Keluar</a>
+  openBtn.addEventListener("click", () =>
+    panel.classList.remove("translate-x-full"));
+  closeBtn.addEventListener("click", () =>
+    panel.classList.add("translate-x-full"));
+
+  const data = JSON.parse(localStorage.getItem("profilPetani"));
+
+  if (!data) {
+    panelData.innerHTML = `
+      <p class="italic text-gray-500">Belum ada data profil.</p>
+      <a href="petani_editprofil.html"
+         class="text-[#B8860B] underline">Isi profil</a>`;
+    return;
+  }
+
+  panelData.innerHTML = `
+    <div class="flex justify-center mb-4">
+      <img src="${data.foto || 'default-profile.png'}"
+        class="w-20 h-20 rounded-full object-cover border-4 border-[#B8860B]/70">
+    </div>
+    <p><b>Nama:</b> ${data.nama}</p>
+    <p><b>Email:</b> ${data.email}</p>
+    <p><b>Telepon:</b> ${data.telepon}</p>
+    <p><b>Alamat:</b> ${data.alamat}</p>
+    <p><b>Wilayah:</b> ${data.kecamatan}, ${data.kota}</p>
+    <p><b>Luas:</b> ${data.luas}</p>
+    <p><b>Jenis:</b> ${data.jenis}</p>
+  `;
+});
+
+/* ===== PRODUK ===== */
+let produkPetani = JSON.parse(localStorage.getItem("produkPetani")) || [];
+
+function renderProduk() {
+  const grid = document.getElementById("produkGrid");
+  grid.innerHTML = "";
+
+  if (!produkPetani.length) {
+    grid.innerHTML =
+      `<p class="col-span-full text-center text-gray-500">Belum ada produk</p>`;
+    return;
+  }
+
+  produkPetani.forEach((p, i) => {
+    grid.innerHTML += `
+      <div class="bg-white rounded-xl shadow p-4">
+        <img src="${p.gambar}" class="w-full h-40 object-cover rounded mb-3">
+        <h3 class="font-semibold">${p.nama}</h3>
+        <p>Rp ${p.harga.toLocaleString()} / kg</p>
+        <p class="text-sm text-gray-500">Stok: ${p.stok} kg</p>
+        <div class="flex justify-between mt-3">
+          <button onclick="editProduk(${i})"
+            class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</button>
+          <button onclick="hapusProduk(${i})"
+            class="bg-red-500 text-white px-3 py-1 rounded">Hapus</button>
         </div>
-      `;
-    } else {
-      container.innerHTML = `
-        <div><p class="text-gray-500">Nama</p><p class="font-medium">${data.nama}</p></div>
-        <div><p class="text-gray-500">Email</p><p class="font-medium">${data.email}</p></div>
-        <div><p class="text-gray-500">Alamat</p><p class="font-medium">${data.alamat}</p></div>
-        <div class="mt-6 flex flex-col space-y-3">
-          <a href="petani_editprofil.html" class="block text-center bg-[#B8860B] text-white py-2 rounded-lg hover:bg-[#9A7508] transition">Edit Profil</a>
-          <a href="landing_page.html" class="block text-center border border-[#B8860B] text-[#B8860B] py-2 rounded-lg hover:bg-[#B8860B] hover:text-white transition">Keluar</a>
-        </div>
-      `;
-    }
-    panel.classList.remove("translate-x-full");
+      </div>`;
   });
 
-  closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
+  localStorage.setItem("produkPetani", JSON.stringify(produkPetani));
+}
+
+function openModal() {
+  document.getElementById("produkModal").classList.remove("hidden");
+}
+function closeModal() {
+  document.getElementById("produkModal").classList.add("hidden");
+  document.getElementById("produkForm").reset();
+  document.getElementById("previewImage").classList.add("hidden");
+  document.getElementById("editIndex").value = "";
+}
+function previewGambar(e) {
+  const img = document.getElementById("previewImage");
+  img.src = URL.createObjectURL(e.target.files[0]);
+  img.classList.remove("hidden");
+}
+
+document.getElementById("produkForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const i = document.getElementById("editIndex").value;
+  const produk = {
+    nama: namaProduk.value,
+    harga: +hargaProduk.value,
+    stok: +stokProduk.value,
+    deskripsi: deskripsiProduk.value,
+    kategori: kategoriProduk.value,
+    klasifikasi: klasifikasiProduk.value,
+    gambar: previewImage.src
+  };
+  i ? produkPetani[i] = produk : produkPetani.push(produk);
+  renderProduk();
+  closeModal();
 });
+
+function editProduk(i) {
+  const p = produkPetani[i];
+  editIndex.value = i;
+  namaProduk.value = p.nama;
+  hargaProduk.value = p.harga;
+  stokProduk.value = p.stok;
+  deskripsiProduk.value = p.deskripsi;
+  kategoriProduk.value = p.kategori;
+  klasifikasiProduk.value = p.klasifikasi;
+  previewImage.src = p.gambar;
+  previewImage.classList.remove("hidden");
+  openModal();
+}
+function hapusProduk(i) {
+  if (confirm("Hapus produk ini?")) {
+    produkPetani.splice(i, 1);
+    renderProduk();
+  }
+}
+
+renderProduk();
 </script>
 
-
-  <!-- ✅ MAIN CONTENT -->
-  <main class="container mx-auto py-10 px-6 pt-28">
-    <div class="flex justify-between items-center mb-8">
-      <h2 class="text-2xl font-title text-[#4B3832]">Produk Saya</h2>
-      <button onclick="openModal()" class="bg-[#B8860B] text-white px-5 py-2 rounded-md shadow hover:bg-yellow-700">
-        + Tambah Produk
-      </button>
-    </div>
-
-    <!-- GRID PRODUK -->
-    <div id="produkGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-  </main>
-
-  <!-- ✅ MODAL TAMBAH / EDIT PRODUK -->
-  <div id="produkModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-auto">
-    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg my-10 max-h-[90vh] overflow-y-auto">
-      <h3 id="modalTitle" class="text-xl font-semibold mb-4 font-body">Tambah Produk</h3>
-      <form id="produkForm" class="space-y-4">
-        <input type="hidden" id="editIndex">
-
-        <div>
-          <label class="block text-gray-700">Nama Produk</label>
-          <input id="namaProduk" type="text" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
-        </div>
-
-        <div>
-          <label class="block text-gray-700">Harga (Rp/kg)</label>
-          <input id="hargaProduk" type="number" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
-        </div>
-
-        <div>
-          <label class="block text-gray-700">Stok Total (kg)</label>
-          <input id="stokProduk" type="number" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
-          <p class="text-xs text-gray-500 mt-1">Masukkan total stok yang dimiliki (dalam kg)</p>
-        </div>
-
-        <div>
-          <label class="block text-gray-700">Deskripsi</label>
-          <textarea id="deskripsiProduk" rows="3" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]"></textarea>
-        </div>
-
-        <div>
-          <label class="block text-gray-700">Kategori</label>
-          <select id="kategoriProduk" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]">
-            <option value="Arabika">Arabika</option>
-            <option value="Robusta">Robusta</option>
-            <option value="Liberica">Liberica</option>
-            <option value="Excelsa">Excelsa</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-gray-700">Kualitas</label>
-          <select id="klasifikasiProduk" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]">
-            <option value="Premium">Premium</option>
-            <option value="Standar">Standar</option>
-            <option value="Ekonomis">Ekonomis</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="block text-gray-700">Gambar Produk</label>
-          <input id="gambarProduk" type="file" accept="image/*" class="w-full border rounded-md px-3 py-2" onchange="previewGambar(event)">
-          <img id="previewImage" class="mt-3 w-32 h-32 object-cover rounded-md hidden">
-        </div>
-
-        <div class="flex justify-end space-x-3">
-          <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Batal</button>
-          <button type="submit" class="px-4 py-2 bg-[#B8860B] text-white rounded-md hover:bg-yellow-700">Simpan</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ✅ FOOTER -->
-  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
-    <div class="text-center text-sm text-gray-300">&copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.</div>
-  </footer>
-
-  <!-- ✅ SCRIPT -->
-  <script>
-    // Profil Panel
-    const openProfil = document.getElementById("open-profil");
-    const closeProfil = document.getElementById("close-profil");
-    const profilPanel = document.getElementById("profil-panel");
-    openProfil.addEventListener("click", () => profilPanel.classList.remove("translate-x-full"));
-    closeProfil.addEventListener("click", () => profilPanel.classList.add("translate-x-full"));
-
-    // Data produk petani
-    let produkPetani = JSON.parse(localStorage.getItem("produkPetani")) || [];
-
-    function renderProduk() {
-      const grid = document.getElementById("produkGrid");
-      grid.innerHTML = "";
-      if (produkPetani.length === 0) {
-        grid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Belum ada produk yang ditambahkan.</p>`;
-      }
-      produkPetani.forEach((p, i) => {
-        grid.innerHTML += `
-          <div class="bg-white rounded-xl shadow-md p-4">
-            <img src="${p.gambar}" alt="${p.nama}" class="w-full h-48 object-cover rounded-lg mb-4">
-            <div class="flex justify-between items-start">
-              <h3 class="font-semibold text-lg text-[#4B3832]">${p.nama}</h3>
-              <span class="text-xs px-2 py-1 rounded-md bg-yellow-100 text-yellow-800">${p.klasifikasi}</span>
-            </div>
-            <p class="text-gray-600">Rp ${p.harga.toLocaleString()} / kg</p>
-            <p class="text-sm text-gray-500 mb-2">Stok: <b>${p.stok} kg</b></p>
-            <p class="text-xs text-gray-400 mb-3">${p.deskripsi || "Tidak ada deskripsi."}</p>
-            <div class="flex justify-between">
-              <button onclick="editProduk(${i})" class="px-3 py-1 bg-yellow-500 text-white rounded-md text-sm hover:bg-yellow-600">Edit</button>
-              <button onclick="hapusProduk(${i})" class="px-3 py-1 bg-red-500 text-white rounded-md text-sm hover:bg-red-600">Hapus</button>
-            </div>
-          </div>
-        `;
-      });
-      localStorage.setItem("produkPetani", JSON.stringify(produkPetani));
-    }
-
-    function openModal(editMode = false) {
-      document.getElementById("produkModal").classList.remove("hidden");
-      document.getElementById("modalTitle").textContent = editMode ? "Edit Produk" : "Tambah Produk";
-    }
-
-    function closeModal() {
-      document.getElementById("produkModal").classList.add("hidden");
-      document.getElementById("produkForm").reset();
-      document.getElementById("previewImage").classList.add("hidden");
-      document.getElementById("editIndex").value = "";
-    }
-
-    function previewGambar(e) {
-      const img = document.getElementById("previewImage");
-      img.src = URL.createObjectURL(e.target.files[0]);
-      img.classList.remove("hidden");
-    }
-
-    document.getElementById("produkForm").addEventListener("submit", e => {
-      e.preventDefault();
-      const nama = document.getElementById("namaProduk").value;
-      const harga = parseInt(document.getElementById("hargaProduk").value);
-      const stok = parseFloat(document.getElementById("stokProduk").value);
-      const deskripsi = document.getElementById("deskripsiProduk").value;
-      const kategori = document.getElementById("kategoriProduk").value;
-      const klasifikasi = document.getElementById("klasifikasiProduk").value;
-      const fileInput = document.getElementById("gambarProduk");
-      const imgURL = fileInput.files[0] ? URL.createObjectURL(fileInput.files[0]) : "https://via.placeholder.com/150";
-      const editIndex = document.getElementById("editIndex").value;
-
-      if (editIndex) {
-        produkPetani[editIndex] = { nama, harga, stok, deskripsi, kategori, klasifikasi, gambar: imgURL };
-      } else {
-        produkPetani.push({ nama, harga, stok, deskripsi, kategori, klasifikasi, gambar: imgURL });
-      }
-      renderProduk();
-      closeModal();
-    });
-
-    function editProduk(i) {
-      const p = produkPetani[i];
-      document.getElementById("editIndex").value = i;
-      document.getElementById("namaProduk").value = p.nama;
-      document.getElementById("hargaProduk").value = p.harga;
-      document.getElementById("stokProduk").value = p.stok;
-      document.getElementById("deskripsiProduk").value = p.deskripsi;
-      document.getElementById("kategoriProduk").value = p.kategori;
-      document.getElementById("klasifikasiProduk").value = p.klasifikasi;
-      document.getElementById("previewImage").src = p.gambar;
-      document.getElementById("previewImage").classList.remove("hidden");
-      openModal(true);
-    }
-
-    function hapusProduk(i) {
-      if (confirm("Yakin ingin menghapus produk ini?")) {
-        produkPetani.splice(i, 1);
-        renderProduk();
-      }
-    }
-
-    renderProduk();
-  </script>
 </body>
 </html>

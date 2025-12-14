@@ -3,254 +3,166 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beranda Petani | NBB Coffee Hub</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
     .font-title { font-family: 'Playfair Display', serif; }
     .font-body { font-family: 'Poppins', sans-serif; }
   </style>
 </head>
+
 <body class="bg-gray-50 font-body">
 
-  <!-- ✅ NAVBAR -->
-  <header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50">
-    <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20 bg-[#4B3832]/70">
-      <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
-      <nav class="hidden md:flex space-x-8 font-medium">
-        <a href="petani_beranda.html" class="text-[#B8860B] font-semibold transition">Beranda</a>
-        <a href="petani_produk.html" class="hover:text-[#B8860B] transition">Kelola Produk</a>
-        <a href="petani_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
-        <a href="petani_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
-      </nav>
-      <div class="flex items-center space-x-4">
-        <button id="open-profil" class="hover:text-[#B8860B] transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A12 12 0 0112 15c2.146 0 4.148.74 5.766 2.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </header>
+<!-- ================= NAVBAR ================= -->
+<header class="bg-[#4B3832]/90 backdrop-blur-sm text-[#EFEBE9] fixed w-full top-0 z-50 shadow-md">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-8 h-20">
 
- <!-- ✅ PROFIL PANEL PETANI -->
-<div id="profil-panel" class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[100] transform translate-x-full transition-all duration-300 ease-in-out">
-  <div class="flex justify-between items-center px-6 py-4 border-b bg-[#4B3832]/90 text-[#EFEBE9]">
-    <h3 class="text-lg font-semibold">Profil Petani</h3>
-    <button id="close-profil" class="text-gray-200 hover:text-red-400 text-2xl">&times;</button>
+    <!-- LOGO -->
+    <img src="logo.png" alt="NBB Coffee Hub Logo" class="h-12 w-auto drop-shadow-md">
+
+    <!-- MENU -->
+    <nav class="hidden md:flex space-x-8 font-medium">
+      <a href="petani_beranda.html" class="text-[#B8860B] font-semibold">Beranda</a>
+      <a href="petani_produk.html" class="hover:text-[#B8860B] transition">Kelola Produk</a>
+      <a href="petani_blog.html" class="hover:text-[#B8860B] transition">Blog</a>
+      <a href="petani_harga.html" class="hover:text-[#B8860B] transition">Harga Kopi</a>
+    </nav>
+
+    <!-- ICON PROFIL (KONSISTEN) -->
+    <button id="open-profil" class="hover:text-[#B8860B] transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none"
+           viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M5.121 17.804A12 12 0 0112 15
+             c2.146 0 4.148.74 5.766 2.804
+             M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    </button>
+
+  </div>
+</header>
+
+<!-- ================= PANEL PROFIL ================= -->
+<div id="profil-panel"
+  class="fixed top-0 right-0 h-full w-80 bg-white shadow-xl z-[100]
+         transform translate-x-full transition-all duration-300 ease-in-out">
+
+  <div class="flex justify-between items-center px-6 py-4 border-b">
+    <h3 class="text-lg font-semibold text-[#4B3832]">Profil Petani</h3>
+    <button id="close-profil"
+      class="text-gray-500 hover:text-red-600 text-xl">&times;</button>
   </div>
 
-  <div class="p-6 space-y-4 text-sm" id="profil-panel-data">
+  <div id="profil-panel-data" class="p-6 space-y-4 text-sm">
     <p class="text-gray-500 italic">Memuat data...</p>
   </div>
 
   <div class="p-6 border-t text-center">
-    <a href="petani_editprofil.html" class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">Edit Profil</a>
+    <a href="petani_editprofil.html"
+       class="bg-[#B8860B] text-white px-4 py-2 rounded-lg hover:bg-[#654321] transition">
+       Edit Profil
+    </a>
   </div>
 </div>
 
-<!-- ✅ SCRIPT PROFIL PANEL -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const panel = document.getElementById("profil-panel");
-    const openBtn = document.getElementById("open-profil");
-    const closeBtn = document.getElementById("close-profil");
-    const panelData = document.getElementById("profil-panel-data");
+<!-- ================= MAIN ================= -->
+<main class="max-w-7xl mx-auto px-6 pt-28 pb-16">
 
-    // buka & tutup panel
-    openBtn?.addEventListener("click", () => panel.classList.remove("translate-x-full"));
-    closeBtn?.addEventListener("click", () => panel.classList.add("translate-x-full"));
+  <h1 class="text-3xl font-title text-[#4B3832] mb-6">
+    Beranda Petani
+  </h1>
 
-    // ambil data dari localStorage
-    const data = JSON.parse(localStorage.getItem("profilPetani"));
-
-    if (!data) {
-      panelData.innerHTML = `
-        <p class='text-gray-500 italic'>Belum ada data profil.</p>
-        <p><a href='petani_editprofil.html' class='text-[#B8860B] underline'>Isi profil di sini</a></p>
-      `;
-      return;
-    }
-
-    // tampilkan data
-    panelData.innerHTML = `
-      <div class="flex justify-center mb-4">
-        <img src="${data.foto || 'default-profile.png'}" class="w-20 h-20 rounded-full object-cover border-4 border-[#B8860B]/70 shadow-md">
-      </div>
-      <p><span class='text-gray-500'>Nama:</span> ${data.nama}</p>
-      <p><span class='text-gray-500'>Email:</span> ${data.email}</p>
-      <p><span class='text-gray-500'>Telepon:</span> ${data.telepon}</p>
-      <p><span class='text-gray-500'>Alamat:</span> ${data.alamat}</p>
-      <p><span class='text-gray-500'>Wilayah:</span> ${data.kecamatan}, ${data.kota}, ${data.provinsi} (${data.kodepos})</p>
-      <p><span class='text-gray-500'>Kota:</span> ${data.kota}</p>
-      <p><span class='text-gray-500'>Luas:</span> ${data.luas}</p>
-      <p><span class='text-gray-500'>Jenis:</span> ${data.jenis}</p>
-      <p><span class='text-gray-500'>Deskripsi:</span> ${data.deskripsi}</p>
-      `;
-  });
-
-</script>
-
-
-  <!-- ✅ MAIN CONTENT -->
-  <main class="max-w-7xl mx-auto px-6 pt-28 pb-16">
-    <h1 class="text-3xl font-title text-[#4B3832] mb-6">Beranda Petani</h1>
-
-    <!-- 📊 Statistik Ringkas -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <p class="text-gray-500 text-sm">Total Produk Diinput</p>
-        <h2 id="totalInput" class="text-3xl font-semibold text-[#4B3832] mt-2">0</h2>
-      </div>
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <p class="text-gray-500 text-sm">Total Produk Terjual</p>
-        <h2 id="totalTerjual" class="text-3xl font-semibold text-[#4B3832] mt-2">0</h2>
-      </div>
-      <div class="bg-white rounded-xl shadow-md p-6">
-        <p class="text-gray-500 text-sm">Total Diskon Aktif</p>
-        <h2 id="totalDiskon" class="text-3xl font-semibold text-[#4B3832] mt-2">0</h2>
-      </div>
+  <!-- STATISTIK -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <p class="text-gray-500 text-sm">Total Produk Diinput</p>
+      <h2 id="totalInput" class="text-3xl font-semibold text-[#4B3832] mt-2">0</h2>
     </div>
-
-    <!-- 🌱 Tips & Insight -->
-    <div class="bg-gradient-to-r from-[#4B3832]/90 to-[#B8860B]/70 text-white rounded-xl p-6 shadow-md">
-      <h3 class="text-lg font-semibold mb-2 font-title">Tips Pemasaran</h3>
-      <p class="text-sm leading-relaxed">
-        Gunakan foto produk yang jelas dan tambahkan deskripsi menarik agar pembeli percaya dengan kualitas kopi Anda.  
-        Memberikan diskon kecil secara berkala juga bisa menarik pelanggan baru!
-      </p>
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <p class="text-gray-500 text-sm">Total Produk Terjual</p>
+      <h2 id="totalTerjual" class="text-3xl font-semibold text-[#4B3832] mt-2">0</h2>
     </div>
-  </main>
-
-  <!-- ✅ MODAL TAMBAH DISKON -->
-  <div id="diskonModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-auto">
-    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg my-10 max-h-[90vh] overflow-y-auto">
-      <h3 class="text-xl font-semibold mb-4 font-body">Tambah Diskon</h3>
-      <form id="diskonForm" class="space-y-4">
-        <div>
-          <label class="block text-gray-700">Jenis Diskon</label>
-          <select id="jenisDiskon" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]">
-            <option value="Toko">Diskon Toko</option>
-            <option value="Produk">Diskon Produk</option>
-          </select>
-        </div>
-
-        <div id="produkSelectContainer" class="hidden">
-          <label class="block text-gray-700">Pilih Produk</label>
-          <select id="produkDiskon" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]"></select>
-        </div>
-
-        <div>
-          <label class="block text-gray-700">Persentase Diskon (%)</label>
-          <input id="persenDiskon" type="number" min="1" max="90" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]" required>
-        </div>
-
-        <div>
-          <label class="block text-gray-700">Keterangan (opsional)</label>
-          <textarea id="keteranganDiskon" rows="3" class="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-[#B8860B]"></textarea>
-        </div>
-
-        <div class="flex justify-end space-x-3">
-          <button type="button" onclick="closeDiskonModal()" class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">Batal</button>
-          <button type="submit" class="px-4 py-2 bg-[#B8860B] text-white rounded-md hover:bg-yellow-700">Simpan</button>
-        </div>
-      </form>
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <p class="text-gray-500 text-sm">Total Diskon Aktif</p>
+      <h2 id="totalDiskon" class="text-3xl font-semibold text-[#4B3832] mt-2">0</h2>
     </div>
   </div>
 
-  <!-- ✅ FOOTER -->
-  <footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
-    <div class="text-center text-sm text-gray-300">&copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.</div>
-  </footer>
+  <!-- TIPS -->
+  <div class="bg-gradient-to-r from-[#4B3832]/90 to-[#B8860B]/70
+              text-white rounded-xl p-6 shadow-md">
+    <h3 class="text-lg font-semibold mb-2 font-title">
+      Tips Pemasaran
+    </h3>
+    <p class="text-sm leading-relaxed">
+      Gunakan foto produk yang jelas dan tambahkan deskripsi menarik agar pembeli
+      percaya kualitas kopi Anda. Berikan diskon kecil secara berkala untuk
+      menarik pelanggan baru!
+    </p>
+  </div>
 
-  <!-- ✅ SCRIPT -->
-  <script>
-    // Profil Panel
-    const openProfil = document.getElementById("open-profil");
-    const closeProfil = document.getElementById("close-profil");
-    const profilPanel = document.getElementById("profil-panel");
-    openProfil.addEventListener("click", () => profilPanel.classList.remove("translate-x-full"));
-    closeProfil.addEventListener("click", () => profilPanel.classList.add("translate-x-full"));
+</main>
 
-    // Data awal
-    let produkPetani = JSON.parse(localStorage.getItem("produkPetani")) || [];
-    let diskonPetani = JSON.parse(localStorage.getItem("diskonPetani")) || [];
-    let produkTerjual = JSON.parse(localStorage.getItem("produkTerjual")) || [];
+<!-- ================= FOOTER ================= -->
+<footer class="bg-[#4B3832]/90 text-[#EFEBE9] py-10 mt-12">
+  <div class="text-center text-sm text-gray-300">
+    &copy; 2025 NBB Coffee Hub Petani. All Rights Reserved.
+  </div>
+</footer>
 
-    // Update Statistik
-    function updateStats() {
-      document.getElementById("totalInput").textContent = produkPetani.length;
-      document.getElementById("totalTerjual").textContent = produkTerjual.length || 0;
-      document.getElementById("totalDiskon").textContent = diskonPetani.length;
-    }
+<!-- ================= SCRIPT ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const panel = document.getElementById("profil-panel");
+  const openBtn = document.getElementById("open-profil");
+  const closeBtn = document.getElementById("close-profil");
+  const panelData = document.getElementById("profil-panel-data");
 
-    // Render Diskon
-    function renderDiskon() {
-      const list = document.getElementById("diskonList");
-      list.innerHTML = "";
-      if (diskonPetani.length === 0) {
-        list.innerHTML = `<p class="text-gray-500 col-span-full text-center">Belum ada diskon yang ditambahkan.</p>`;
-      } else {
-        diskonPetani.forEach((d, i) => {
-          list.innerHTML += `
-            <div class="bg-white border rounded-lg p-4 shadow-sm">
-              <div class="flex justify-between items-start mb-2">
-                <h4 class="font-semibold text-[#4B3832]">${d.jenis === 'Toko' ? 'Diskon Toko' : 'Diskon Produk'}</h4>
-                <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded">${d.persen}%</span>
-              </div>
-              <p class="text-sm text-gray-600">${d.keterangan || 'Tidak ada keterangan.'}</p>
-              ${d.produk ? `<p class="text-xs text-gray-500 mt-1">Produk: <b>${d.produk}</b></p>` : ""}
-              <button onclick="hapusDiskon(${i})" class="mt-3 text-xs text-red-600 hover:underline">Hapus</button>
-            </div>
-          `;
-        });
-      }
-      updateStats();
-      localStorage.setItem("diskonPetani", JSON.stringify(diskonPetani));
-    }
+  openBtn.addEventListener("click", () =>
+    panel.classList.remove("translate-x-full"));
+  closeBtn.addEventListener("click", () =>
+    panel.classList.add("translate-x-full"));
 
-    // Modal Diskon
-    function openDiskonModal() {
-      document.getElementById("diskonModal").classList.remove("hidden");
-      const selectProduk = document.getElementById("produkDiskon");
-      selectProduk.innerHTML = "";
-      produkPetani.forEach(p => {
-        selectProduk.innerHTML += `<option value="${p.nama}">${p.nama}</option>`;
-      });
-    }
+  // DATA PROFIL
+  const data = JSON.parse(localStorage.getItem("profilPetani"));
 
-    function closeDiskonModal() {
-      document.getElementById("diskonModal").classList.add("hidden");
-      document.getElementById("diskonForm").reset();
-      document.getElementById("produkSelectContainer").classList.add("hidden");
-    }
+  if (!data) {
+    panelData.innerHTML = `
+      <p class="italic text-gray-500">Belum ada data profil.</p>
+      <a href="petani_editprofil.html"
+         class="text-[#B8860B] underline">Isi profil</a>
+    `;
+  } else {
+    panelData.innerHTML = `
+      <div class="flex justify-center mb-4">
+        <img src="${data.foto || 'default-profile.png'}"
+          class="w-20 h-20 rounded-full object-cover border-4 border-[#B8860B]/70">
+      </div>
+      <p><b>Nama:</b> ${data.nama}</p>
+      <p><b>Email:</b> ${data.email}</p>
+      <p><b>Telepon:</b> ${data.telepon}</p>
+      <p><b>Alamat:</b> ${data.alamat}</p>
+      <p><b>Wilayah:</b> ${data.kecamatan}, ${data.kota}</p>
+      <p><b>Luas:</b> ${data.luas}</p>
+      <p><b>Jenis:</b> ${data.jenis}</p>
+    `;
+  }
 
-    document.getElementById("jenisDiskon").addEventListener("change", e => {
-      const show = e.target.value === "Produk";
-      document.getElementById("produkSelectContainer").classList.toggle("hidden", !show);
-    });
+  // STATISTIK
+  const produkPetani = JSON.parse(localStorage.getItem("produkPetani")) || [];
+  const produkTerjual = JSON.parse(localStorage.getItem("produkTerjual")) || [];
+  const diskonPetani = JSON.parse(localStorage.getItem("diskonPetani")) || [];
 
-    document.getElementById("diskonForm").addEventListener("submit", e => {
-      e.preventDefault();
-      const jenis = document.getElementById("jenisDiskon").value;
-      const produk = jenis === "Produk" ? document.getElementById("produkDiskon").value : null;
-      const persen = parseInt(document.getElementById("persenDiskon").value);
-      const keterangan = document.getElementById("keteranganDiskon").value;
+  document.getElementById("totalInput").textContent = produkPetani.length;
+  document.getElementById("totalTerjual").textContent = produkTerjual.length;
+  document.getElementById("totalDiskon").textContent = diskonPetani.length;
+});
+</script>
 
-      diskonPetani.push({ jenis, produk, persen, keterangan });
-      renderDiskon();
-      closeDiskonModal();
-    });
-
-    function hapusDiskon(i) {
-      if (confirm("Yakin ingin menghapus diskon ini?")) {
-        diskonPetani.splice(i, 1);
-        renderDiskon();
-      }
-    }
-
-    // Inisialisasi
-    updateStats();
-    renderDiskon();
-  </script>
 </body>
 </html>

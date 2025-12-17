@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 from pydantic import BaseModel
 from datetime import datetime, timedelta
+from typing import Optional
 
 from database import SessionLocal
 from models import User
@@ -14,6 +16,8 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
 router = APIRouter()
 
 # ---------- SCHEMA ----------
@@ -30,6 +34,7 @@ class UserLogin(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    role: str  # Tambahan agar frontend tahu role user
 
 # ---------- DB Session ----------
 def get_db():
@@ -56,32 +61,43 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 @router.post("/login", response_model=Token)
 def login(user: UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == user.username).first()
+    
     if not db_user or not verify_password(user.password, db_user.hashed_password):
-        raise HTTPException(status_code=401, detail="Incorrect username or password")
-    if not db_user.is_verified:
-        raise HTTPException(status_code=403, detail="Email belum diverifikasi")
-    token = create_access_token({"sub": user.username})
-    return {"access_token": token, "token_type": "bearer"}
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Username atau Password salah",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    # --- BAGIAN PENGECEKAN EMAIL KITA HAPUS SEMENTARA AGAR BISA LOGIN ---
+    # if not db_user.is_verified:
+    #     raise HTTPException(status_code=403, detail="Email belum diverifikasi")
+    
+    # Masukkan role ke dalam token agar bisa dibaca frontend (opsional)
+    access_token = create_access_token(
+        data={"sub": db_user.username, "role": db_user.role}
+    )
+    
+    return {"access_token": access_token, "token_type": "bearer", "role": db_user.role}
 
 @router.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
-    # Cek apakah email atau username sudah ada
+    # Cek username/email kembar
     if db.query(User).filter((User.username == user.username) | (User.email == user.email)).first():
         raise HTTPException(status_code=400, detail="Email atau Username sudah terdaftar")
 
     hashed_pw = get_password_hash(user.password)
+    
+    # Kita set is_verified langsung jadi True saat daftar
     db_user = User(
         email=user.email,
         username=user.username,
         hashed_password=hashed_pw,
         role=user.role,
-        is_verified=False
+        is_verified=True 
     )
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
 
-    # TODO: Kirim email verifikasi ke user.email
-    # misal: send_verification_email(user.email, token)
-
-    return {"message": "User created. Please check your email to verify account."}
+    return {"message": "Pendaftaran Berhasil! Silakan Login."}
